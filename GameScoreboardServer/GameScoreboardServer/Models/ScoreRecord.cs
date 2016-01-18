@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace GameScoreboardServer.Models
 {
-    public class GameScoreRecord
+    public class ScoreRecord
     {
-        public string PlayerName { get; set; }
+		public string GameName { get; set; }
+		public string PlayerName { get; set; }
         public int Score { get; set;  }
     }
 }

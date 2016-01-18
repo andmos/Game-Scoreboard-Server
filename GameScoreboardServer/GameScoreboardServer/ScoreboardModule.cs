@@ -4,17 +4,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameScoreboardServer.Services;
+using GameScoreboardServer.Models;
+using Nancy.ModelBinding;
 
 namespace GameScoreboardServer
 {
     public class ScoreboardModule :  NancyModule 
     {
-        public ScoreboardModule() : base("/api/v1")
+		private IDataStorage m_dataStorage; 
+
+		public ScoreboardModule(IDataStorage dataStorage) : base("/api/v1")
         {
-            Get["/ping"] = parameters =>
+			StaticConfiguration.DisableErrorTraces = false;
+			m_dataStorage = dataStorage; 
+
+			Get["/ping"] = parameters =>
             {
                 return "pong";
             }; 
-        }
+        
+			Post ["/addScoreBoardData"] = parameters => 
+			{
+				try 
+				{
+					var scoreBoardData = this.Bind<ScoreRecord> (); 
+					m_dataStorage.AddScoreRecordToStorage(scoreBoardData); 
+					return HttpStatusCode.Created; 
+				} 
+				catch (Exception e) 
+				{
+
+					return HttpStatusCode.InternalServerError; 
+				}
+			};
+
+			Get ["/gameScoreBoard"] = parameters => 
+			{
+				string gameNameFromQuery = Request.Query ["gameName"];
+				return Response.AsJson (m_dataStorage.GetAllScoresForGame(gameNameFromQuery)); 
+			};
+
+			Get ["/gameScoreBoard"] = parameters => 
+			{
+				string playerNameFromQuery = Request.Query ["playerName"]; 
+				return Response.AsJson (m_dataStorage.GetAllScoresForUsername(playerNameFromQuery)); 
+			};
+		}
     }
 }

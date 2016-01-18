@@ -8,28 +8,32 @@ namespace GameScoreboardServer.Services
 {
     public class GameScoreBoardDataCache : IDataStorage
     {
-        private readonly ConcurrentDictionary<string, List<GameScoreRecord>> m_gameScoreBoardCache;
+        private readonly ConcurrentDictionary<string, List<ScoreRecord>> m_gameScoreBoardCache;
 
-        public bool AddScoreRecordToStorage(string gameName, GameScoreRecord record)
+		public GameScoreBoardDataCache()
+		{
+			m_gameScoreBoardCache = new ConcurrentDictionary<string, List<ScoreRecord>> (); 
+		}
+
+		public bool AddScoreRecordToStorage(ScoreRecord record)
         {
-            List<GameScoreRecord> gameScoreRecords = new List<GameScoreRecord>();
-            if(m_gameScoreBoardCache.TryGetValue(gameName.ToLower(), out gameScoreRecords))
-            {
-                gameScoreRecords.Add(record); 
-            }
-            m_gameScoreBoardCache.AddOrUpdate(gameName, gameScoreRecords, (id, oldScoreList) => gameScoreRecords);
+            List<ScoreRecord> gameScoreRecords = new List<ScoreRecord>();
+			m_gameScoreBoardCache.TryGetValue (record.GameName.ToLower (), out gameScoreRecords);      
+			gameScoreRecords.Add(record); 
+      
+			m_gameScoreBoardCache.AddOrUpdate(record.GameName, gameScoreRecords, (id, oldScoreList) => gameScoreRecords);
             return true; 
 
         }
 
-        public IEnumerable<GameScoreRecord> GetAllScoresForGame(string gameName)
+        public IEnumerable<ScoreRecord> GetAllScoresForGame(string gameName)
         {
-            List<GameScoreRecord> recordFromCache;
+            List<ScoreRecord> recordFromCache;
             
-            return m_gameScoreBoardCache.TryGetValue(gameName.ToLower(), out recordFromCache) ? recordFromCache : Enumerable.Empty<GameScoreRecord>();
+            return m_gameScoreBoardCache.TryGetValue(gameName.ToLower(), out recordFromCache) ? recordFromCache : Enumerable.Empty<ScoreRecord>();
         }
 
-        public IEnumerable<GameScoreRecord> GetAllScoresForUsername(string username)
+        public IEnumerable<ScoreRecord> GetAllScoresForUsername(string username)
         {
             throw new NotImplementedException(); 
         }

@@ -9,8 +9,8 @@ namespace GameScoreboardServer.Services
 {
     public interface IDataStorage
     {
-        IEnumerable<GameScoreRecord> GetAllScoresForGame(string gameName);
-        IEnumerable<GameScoreRecord> GetAllScoresForUsername(string username);
-        bool AddScoreRecordToStorage(string gameName, GameScoreRecord record);
+        IEnumerable<ScoreRecord> GetAllScoresForGame(string gameName);
+        IEnumerable<ScoreRecord> GetAllScoresForUsername(string username);
+        bool AddScoreRecordToStorage(ScoreRecord record);
     }
 }

@@ -20,15 +20,16 @@ namespace GameScoreboardServer
                         c.AddHost(port: 5000);
                         c.CreateUrlReservationsOnInstall();
                         c.OpenFirewallPortsOnInstall(firewallRuleName: "GameScoreboardServer");
+						
                     });
                 });
-                x.StartAutomatically();
+				x.StartAutomatically();
                 x.SetServiceName("GameScoreboardServer");
                 x.SetDisplayName("GameScoreboardServer");
                 x.SetDescription("GameScoreboardServer");
                 x.RunAsNetworkService();
             });
-            host.Run();
+			host.Run();
         }
     }
 }
