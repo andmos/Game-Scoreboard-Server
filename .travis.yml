@@ -5,9 +5,9 @@ services:
   - docker
 #before_script:
 script:
-    - chmod +x buildServer
-    - ./buildServer build-local
-    - ./buildServer build-docker
+    - chmod +x buildServer.sh
+    - ./buildServer.sh build-local
+    - ./buildServer.sh build-docker
    # - ./buildServer run-docker
 #script:
    # - ./buildServer unit-local
