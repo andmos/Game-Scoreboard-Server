@@ -18,10 +18,8 @@ Vagrant::Config.run do |config|
   config.vm.provision :shell, :inline => "echo All done, go vagrant ssh!"
 
   config.vm.forward_port 5002, 5000 # HealthKitServer
-  config.vm.forward_port 8983, 8983 # Solr
-  config.vm.forward_port 6379, 6379 # Redis
   config.vm.forward_port 3306, 3306 # MySQL
-  config.vm.forward_port 5432, 5432 # PostgreSQL
+ 
 end
 
 Vagrant.configure("2") do |config|
