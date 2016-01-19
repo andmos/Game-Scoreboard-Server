@@ -34,7 +34,6 @@ namespace GameScoreboardServer
 				} 
 				catch (Exception e) 
 				{
-
 					return HttpStatusCode.InternalServerError; 
 				}
 			};
