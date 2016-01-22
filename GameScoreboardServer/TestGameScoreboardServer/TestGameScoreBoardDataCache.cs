@@ -14,10 +14,11 @@ namespace TestGameScoreBoardServer.Tests.Services
 	public class TestGameScoreBoardDataCache 
 	{     
 		[Test()]
+		[Category("unit")]
 		public void AddScoreRecordToStorage_GivenGameNameAndSingleScoreRecord_RecordGetsAddedToCache()
 		{
 			var cache = new GameScoreBoardDataCache();
-			var record = new ScoreRecord { PlayerName = "Player1", Score = 3000 };
+			var record = new ScoreRecord { PlayerName = "Player1", Score = 3000, GameName = "game1"};
 			string gameName = "Game1";
 
 			cache.AddScoreRecordToStorage(record);

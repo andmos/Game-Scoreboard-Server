@@ -17,8 +17,12 @@ namespace GameScoreboardServer.Services
 
 		public bool AddScoreRecordToStorage(ScoreRecord record)
         {
-            List<ScoreRecord> gameScoreRecords = new List<ScoreRecord>();
-			m_gameScoreBoardCache.TryGetValue (record.GameName.ToLower (), out gameScoreRecords);      
+			List<ScoreRecord> gameScoreRecords;
+			m_gameScoreBoardCache.TryGetValue (record.GameName.ToLower (), out gameScoreRecords); 
+			if (gameScoreRecords == null) 
+			{
+				gameScoreRecords = new List<ScoreRecord> (); 	
+			}
 			gameScoreRecords.Add(record); 
       
 			m_gameScoreBoardCache.AddOrUpdate(record.GameName, gameScoreRecords, (id, oldScoreList) => gameScoreRecords);
