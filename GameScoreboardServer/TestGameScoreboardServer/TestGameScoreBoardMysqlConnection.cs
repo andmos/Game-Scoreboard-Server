@@ -17,6 +17,7 @@ namespace TestGameScoreboardServer
 		private readonly string m_connectionString;
 		private readonly GameScoreBoardMysqlConnection m_mysqlConnection; 
 		private const string m_playerName = "player1"; 
+		private const string m_gameName = "game1"; 
 
 		public TestGameScoreBoardMysqlConnection()
 		{
@@ -28,7 +29,7 @@ namespace TestGameScoreboardServer
 		[Category("integration")]
 		public void AddScoreRecordToStorage_GivenValidScoreRecord_ReturnsTrue()
 		{
-			var exampleRecord = new ScoreRecord { GameName = "game1", PlayerName = m_playerName, Score = 1000 };
+			var exampleRecord = new ScoreRecord { GameName = m_gameName, PlayerName = m_playerName, Score = 1000 };
 
 			Assert.IsTrue (m_mysqlConnection.AddScoreRecordToStorage (exampleRecord));
 		}
@@ -41,32 +42,7 @@ namespace TestGameScoreboardServer
 
 			Assert.IsTrue (resultFromDb.Count() > 0); 
 		}
-
-		[TearDown]
-		public void CleanupPlayerName()
-		{
-			var sql = @"DELETE FROM GameScoreBoard WHERE PlayerName = @PlayerName"; 
-
-			using (var connection = new MySqlConnection ()) 
-			{
-				try
-				{
-					connection.ConnectionString = m_connectionString; 
-					connection.Open();
-					connection.Execute(sql, new {PlayerName = m_playerName}); 
-
-					 
-				}
-				catch(MySql.Data.MySqlClient.MySqlException e) 
-				{
-					Console.WriteLine (e.ToString ()); 
-				}
-				finally
-				{
-					connection.Close(); 
-				}
-			}
-		}
+			
 	}
 }
 
