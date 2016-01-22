@@ -10,6 +10,7 @@ namespace GameScoreboardServer.Services
     public interface IDataStorage
     {
         IEnumerable<ScoreRecord> GetAllScoresForGame(string gameName);
+		IEnumerable<ScoreRecord> GetTopTenScoresForGame (string gameName); 
         IEnumerable<ScoreRecord> GetAllScoresForUsername(string username);
         bool AddScoreRecordToStorage(ScoreRecord record);
     }

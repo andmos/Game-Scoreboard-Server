@@ -34,6 +34,7 @@ namespace GameScoreboardServer
 				} 
 				catch (Exception e) 
 				{
+					Console.WriteLine(e.Message); 
 					return HttpStatusCode.InternalServerError; 
 				}
 			};
@@ -42,6 +43,12 @@ namespace GameScoreboardServer
 			{
 				string gameNameFromQuery = Request.Query ["gameName"];
 				return Response.AsJson (m_dataStorage.GetAllScoresForGame(gameNameFromQuery)); 
+			};
+
+			Get ["/gameScoreBoardTopTen"] = parameters => 
+			{
+				string gameNameFromQuery = Request.Query ["gameName"];
+				return Response.AsJson (m_dataStorage.GetTopTenScoresForGame(gameNameFromQuery)); 
 			};
 
 			Get ["/gameScoreBoard"] = parameters => 

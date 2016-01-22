@@ -28,7 +28,34 @@ namespace GameScoreboardServer
 				{
 					connection.ConnectionString = m_connectionString; 
 					connection.Open();
-					IEnumerable<ScoreRecord> result = connection.Query(sql, new {GameName = gameName}); 
+					IEnumerable<ScoreRecord> result = connection.Query<ScoreRecord>(sql, new {GameName = gameName}); 
+
+					return result; 
+				}
+
+				catch(MySql.Data.MySqlClient.MySqlException e) 
+				{
+					Console.WriteLine (e.ToString ());
+					return Enumerable.Empty<ScoreRecord>(); 
+				}
+				finally
+				{
+					connection.Close(); 
+				}
+			}
+		}
+
+		public IEnumerable<ScoreRecord> GetTopTenScoresForGame(string gameName)
+		{
+			var sql = @"Select * FROM GameScoreBoard WHERE gameName = @GameName ORDER BY GameScoreBoard.Score DESC limit 10";
+
+			using (var connection = new MySqlConnection ()) 
+			{
+				try
+				{
+					connection.ConnectionString = m_connectionString; 
+					connection.Open();
+					IEnumerable<ScoreRecord> result = connection.Query<ScoreRecord>(sql, new {GameName = gameName}); 
 
 					return result; 
 				}
@@ -55,7 +82,7 @@ namespace GameScoreboardServer
 				{
 					connection.ConnectionString = m_connectionString; 
 					connection.Open();
-					IEnumerable<ScoreRecord> result = connection.Query(sql, new {PlayerName = username}); 
+					IEnumerable<ScoreRecord> result = connection.Query<ScoreRecord>(sql, new {PlayerName = username}); 
 
 					return result; 
 				}

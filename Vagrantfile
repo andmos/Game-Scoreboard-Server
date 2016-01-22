@@ -17,7 +17,7 @@ Vagrant::Config.run do |config|
   config.vm.provision :shell, :inline => "cp dotfiles/.bash_profile /home/vagrant; cp dotfiles/.vimrc /home/vagrant"
   config.vm.provision :shell, :inline => "echo All done, go vagrant ssh!"
 
-  config.vm.forward_port 5002, 5000 # HealthKitServer
+  config.vm.forward_port 5002, 5000 # GameScoreBoardServer
   config.vm.forward_port 3306, 3306 # MySQL
  
 end

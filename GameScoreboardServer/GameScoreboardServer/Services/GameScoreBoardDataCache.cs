@@ -33,6 +33,11 @@ namespace GameScoreboardServer.Services
             return m_gameScoreBoardCache.TryGetValue(gameName.ToLower(), out recordFromCache) ? recordFromCache : Enumerable.Empty<ScoreRecord>();
         }
 
+		public IEnumerable<ScoreRecord> GetTopTenScoresForGame(string gameName)
+		{
+			return new List<ScoreRecord> ();  
+		}
+
         public IEnumerable<ScoreRecord> GetAllScoresForUsername(string username)
         {
             throw new NotImplementedException(); 

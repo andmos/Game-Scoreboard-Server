@@ -42,7 +42,56 @@ namespace TestGameScoreboardServer
 
 			Assert.IsTrue (resultFromDb.Count() > 0); 
 		}
-			
+
+		[Test()]
+		[Category("integration")]
+		public void GetAllScoresForGame_GivenValidGame_ReturnsScoreForGame()
+		{
+			var resultFromDb = m_mysqlConnection.GetAllScoresForGame (m_gameName);
+
+			Assert.IsTrue (resultFromDb.Count() > 0); 
+		}
+
+		[Test()]
+		[Category("integration")]
+		public void GetTopTenScoresForGame_GivenListOfScores_ReturnsSortedListWIthTopTenScores()
+		{
+			AddMultipleRecordsToDatabase (); 
+
+			var resultFromDb = m_mysqlConnection.GetTopTenScoresForGame (m_gameName);
+			var sortedResult = resultFromDb.OrderBy (x => x.Score); 
+
+			Assert.IsTrue(resultFromDb.Count() > 9); 
+			CollectionAssert.AreEqual(sortedResult.ToList(), resultFromDb.ToList()); 
+		}
+
+
+		private void AddMultipleRecordsToDatabase()
+		{
+			var records = new List<ScoreRecord> () 
+			{
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 5000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 4000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 6000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 3000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 7000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 9000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 4000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 7000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 9000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player2", Score = 11000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player3", Score = 1000 }, 
+			};
+			foreach (var record in records) 
+			{
+				m_mysqlConnection.AddScoreRecordToStorage (record); 
+			}
+		}
+
 	}
 }
 
