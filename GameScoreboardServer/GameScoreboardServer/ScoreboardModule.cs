@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using GameScoreboardServer.Services;
 using GameScoreboardServer.Models;
 using Nancy.ModelBinding;
+using Nancy.Routing; 
 
 namespace GameScoreboardServer
 {
@@ -38,20 +39,19 @@ namespace GameScoreboardServer
 					return HttpStatusCode.InternalServerError; 
 				}
 			};
-
+				
 			Get ["/gameScoreBoard"] = parameters => 
 			{
 				string gameNameFromQuery = Request.Query ["gameName"];
+				string topTen = Request.Query["topTen"];
+				if(!string.IsNullOrWhiteSpace(topTen))
+				{
+					return Response.AsJson(m_dataStorage.GetTopTenScoresForGame(gameNameFromQuery)); 
+				}
 				return Response.AsJson (m_dataStorage.GetAllScoresForGame(gameNameFromQuery)); 
 			};
 
-			Get ["/gameScoreBoardTopTen"] = parameters => 
-			{
-				string gameNameFromQuery = Request.Query ["gameName"];
-				return Response.AsJson (m_dataStorage.GetTopTenScoresForGame(gameNameFromQuery)); 
-			};
-
-			Get ["/gameScoreBoard"] = parameters => 
+			Get ["/playerScoreBoard"] = parameters => 
 			{
 				string playerNameFromQuery = Request.Query ["playerName"]; 
 				return Response.AsJson (m_dataStorage.GetAllScoresForUsername(playerNameFromQuery)); 

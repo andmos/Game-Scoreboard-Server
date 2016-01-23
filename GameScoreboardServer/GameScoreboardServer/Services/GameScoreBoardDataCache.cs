@@ -14,7 +14,7 @@ namespace GameScoreboardServer.Services
 		{
 			m_gameScoreBoardCache = new ConcurrentDictionary<string, List<ScoreRecord>> (); 
 		}
-
+			
 		public bool AddScoreRecordToStorage(ScoreRecord record)
         {
 			List<ScoreRecord> gameScoreRecords;

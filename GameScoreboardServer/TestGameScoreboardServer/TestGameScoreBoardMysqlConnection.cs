@@ -38,9 +38,15 @@ namespace TestGameScoreboardServer
 		[Category("integration")]
 		public void GetAllScoresForUsername_GivenValidUsername_ReturnsScoreForUsername()
 		{
+			var exampleRecord = new ScoreRecord { GameName = m_gameName, PlayerName = m_playerName, Score = 1000 };
+			m_mysqlConnection.AddScoreRecordToStorage (exampleRecord); 
+
 			var resultFromDb = m_mysqlConnection.GetAllScoresForUsername (m_playerName); 
+			var playerRecord = resultFromDb.FirstOrDefault (); 
 
 			Assert.IsTrue (resultFromDb.Count() > 0); 
+			Assert.AreEqual (m_playerName, playerRecord.PlayerName);  
+			Assert.AreEqual (1000, playerRecord.Score	); 
 		}
 
 		[Test()]
@@ -50,6 +56,7 @@ namespace TestGameScoreboardServer
 			var resultFromDb = m_mysqlConnection.GetAllScoresForGame (m_gameName);
 
 			Assert.IsTrue (resultFromDb.Count() > 0); 
+			Assert.AreEqual (m_gameName, resultFromDb.FirstOrDefault().GameName);  
 		}
 
 		[Test()]
@@ -59,7 +66,7 @@ namespace TestGameScoreboardServer
 			AddMultipleRecordsToDatabase (); 
 
 			var resultFromDb = m_mysqlConnection.GetTopTenScoresForGame (m_gameName);
-			var sortedResult = resultFromDb.OrderBy (x => x.Score); 
+			var sortedResult = resultFromDb.OrderByDescending(x => x.Score); 
 
 			Assert.IsTrue(resultFromDb.Count() > 9); 
 			CollectionAssert.AreEqual(sortedResult.ToList(), resultFromDb.ToList()); 
