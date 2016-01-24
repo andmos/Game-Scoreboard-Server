@@ -39,12 +39,25 @@ namespace GameScoreboardServer.Services
 
 		public IEnumerable<ScoreRecord> GetTopTenScoresForGame(string gameName)
 		{
-			return new List<ScoreRecord> ();  
+			List<ScoreRecord> recordFromCache;
+
+			m_gameScoreBoardCache.TryGetValue (gameName.ToLower (), out recordFromCache); 
+
+			if (recordFromCache != null) 
+			{
+				return recordFromCache.OrderByDescending (x => x.Score).Take(10); 	
+			}
+			return Enumerable.Empty<ScoreRecord>(); 
 		}
 
         public IEnumerable<ScoreRecord> GetAllScoresForUsername(string username)
         {
             throw new NotImplementedException(); 
         }
+
+		public void ClearCache()
+		{
+			m_gameScoreBoardCache.Clear(); 
+		}
     }
 }

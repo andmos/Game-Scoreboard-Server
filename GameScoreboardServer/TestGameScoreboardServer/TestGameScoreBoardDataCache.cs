@@ -13,17 +13,80 @@ namespace TestGameScoreBoardServer.Tests.Services
 	[TestFixture ()]
 	public class TestGameScoreBoardDataCache 
 	{     
+		private GameScoreBoardDataCache m_gameScoreBoardCache; 
+
+		public TestGameScoreBoardDataCache()
+		{
+			m_gameScoreBoardCache = new GameScoreBoardDataCache (); 
+		}
+
 		[Test()]
 		[Category("unit")]
 		public void AddScoreRecordToStorage_GivenGameNameAndSingleScoreRecord_RecordGetsAddedToCache()
 		{
-			var cache = new GameScoreBoardDataCache();
 			var record = new ScoreRecord { PlayerName = "Player1", Score = 3000, GameName = "game1"};
 			string gameName = "Game1";
 
-			cache.AddScoreRecordToStorage(record);
+			m_gameScoreBoardCache.AddScoreRecordToStorage(record);
 
-			Assert.AreEqual(cache.GetAllScoresForGame(gameName).FirstOrDefault().PlayerName, record.PlayerName);
+			Assert.AreEqual(m_gameScoreBoardCache.GetAllScoresForGame(gameName).FirstOrDefault().PlayerName, record.PlayerName);
 		}
+
+		[Test()]
+		[Category("unit")]
+		public void GetAllScoresForGame_GivenValidGameName_ReturnsAllScoresForGame()
+		{
+			AddMultipleRecordsToCache(); 
+
+			var recordsFromCache = m_gameScoreBoardCache.GetAllScoresForGame("game1");
+
+			Assert.IsTrue (recordsFromCache.Count () == 15); 
+		}
+
+		[Test()]
+		[Category("unit")]
+		public void GetTopTenScoresForGame_GivenValdigGameName_ReturnsTopTenRecordsSorted()
+		{
+			AddMultipleRecordsToCache();
+
+			var recordsFromCache = m_gameScoreBoardCache.GetTopTenScoresForGame("game1");
+			var sorted = recordsFromCache.OrderByDescending (x => x.Score); 
+
+			Assert.IsTrue(recordsFromCache.Count () == 10); 
+			CollectionAssert.AreEqual (sorted.ToList(), recordsFromCache.ToList()); 
+		}
+
+		[TearDown]
+		public void TestTearDown()
+		{
+			m_gameScoreBoardCache.ClearCache (); 
+		}
+
+		private void AddMultipleRecordsToCache()
+		{
+			var records = new List<ScoreRecord> () 
+			{
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 5000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 4000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 6000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 3000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 7000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 9000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 4000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 7000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 9000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player2", Score = 11000 }, 
+				new ScoreRecord { GameName = "game1", PlayerName = "player3", Score = 1000 }, 
+			};
+			foreach (var record in records) 
+			{
+				m_gameScoreBoardCache.AddScoreRecordToStorage(record); 
+			}
+		}
+	
 	}
 }
