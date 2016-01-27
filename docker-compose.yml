@@ -1,0 +1,6 @@
+gamescoreboard:
+    build: .
+    ports:
+        - "5000:5000"
+    external_links:
+      - gamescoreboarddb:gamescoreboarddb
