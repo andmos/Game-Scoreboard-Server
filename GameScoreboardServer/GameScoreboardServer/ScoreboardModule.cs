@@ -22,39 +22,70 @@ namespace GameScoreboardServer
 
 			Get["/ping"] = parameters =>
             {
-                return "pong";
+				var response = (Response) "pong"; 
+				response.StatusCode = HttpStatusCode.OK;
+
+				return response; 
             }; 
-        
+        	
 			Post ["/addScoreBoardData"] = parameters => 
 			{
 				try 
 				{
 					var scoreBoardData = this.Bind<ScoreRecord> (); 
 					m_dataStorage.AddScoreRecordToStorage(scoreBoardData); 
-					return HttpStatusCode.Created; 
+					var response = (Response) "Created"; 
+					response.StatusCode = HttpStatusCode.Created; 
+					return response;
 				} 
 				catch (Exception e) 
 				{
-					Console.WriteLine(e.Message); 
-					return HttpStatusCode.InternalServerError; 
+					Console.WriteLine(e); 
+					var response = (Response) e.ToString(); 
+					response.StatusCode = HttpStatusCode.BadRequest; 
+
+					return response;
 				}
 			};
-				
+
 			Get ["/gameScoreBoard"] = parameters => 
 			{
 				string gameNameFromQuery = Request.Query ["gameName"];
-				string topTen = Request.Query["topTen"];
-				if(!string.IsNullOrWhiteSpace(topTen))
+				string numberOfRecords = Request.Query["count"];
+				int count; 
+				if(int.TryParse(numberOfRecords, out count))
 				{
-					return Response.AsJson(m_dataStorage.GetTopTenScoresForGame(gameNameFromQuery)); 
+					try
+					{
+						return Response.AsJson(m_dataStorage.GetScoresForGame(gameNameFromQuery, count)); 
+					}
+					catch(Exception e)
+					{
+						Console.WriteLine(e); 
+						var response = (Response) e.ToString();
+						response.StatusCode = HttpStatusCode.BadRequest; 
+
+						return response; 
+					}
 				}
 				return Response.AsJson (m_dataStorage.GetAllScoresForGame(gameNameFromQuery)); 
 			};
 
 			Get ["/playerScoreBoard"] = parameters => 
 			{
-				string playerNameFromQuery = Request.Query ["playerName"]; 
-				return Response.AsJson (m_dataStorage.GetAllScoresForUsername(playerNameFromQuery)); 
+				try
+				{
+					string playerNameFromQuery = Request.Query ["playerName"]; 
+					return Response.AsJson (m_dataStorage.GetAllScoresForUsername(playerNameFromQuery)); 	
+				}
+				catch(Exception e)
+				{
+					Console.WriteLine(e); 
+					var response = (Response) e.ToString();
+					response.StatusCode = HttpStatusCode.BadRequest; 
+
+					return response; 
+				}
 			};
 		}
     }

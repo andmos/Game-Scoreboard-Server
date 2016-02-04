@@ -55,6 +55,27 @@ namespace TestGameScoreBoardServer.Tests.Services
 			Assert.IsTrue(recordsFromCache.Count () == 10); 
 			CollectionAssert.AreEqual (sorted.ToList(), recordsFromCache.ToList()); 
 		}
+			
+		[Test()]
+		[Category("unit")]
+		public void GetScoresForGame_GivenValdigGameNameAndANumberOfScores_ReturnsCorrectNumberOfRecordsSorted()
+		{
+			AddMultipleRecordsToCache();
+
+			var recordsFromCache = m_gameScoreBoardCache.GetScoresForGame("game1", 5);
+			var sorted = recordsFromCache.OrderByDescending (x => x.Score); 
+
+			Assert.IsTrue(recordsFromCache.Count () == 5); 
+			CollectionAssert.AreEqual (sorted.ToList(), recordsFromCache.ToList()); 
+		}
+
+		[Test()]
+		[Category("unit")]
+		[ExpectedException(typeof(ArgumentOutOfRangeException))]
+		public void GetScoresForGame_GivenValdigGameNameAndANumberOfScoresOver50_ThrowsArgumentOutOfRangeException()
+		{
+			var resultFromCache = m_gameScoreBoardCache.GetScoresForGame("game1", 55);
+		}
 
 		[TearDown]
 		public void TestTearDown()

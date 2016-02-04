@@ -72,6 +72,38 @@ namespace GameScoreboardServer
 			}
 		}
 
+		public IEnumerable<ScoreRecord> GetScoresForGame (string gameName, int numberOfScores)
+		{
+			if (numberOfScores > 50) 
+			{
+				throw new ArgumentOutOfRangeException (); 
+			}
+			var sql = @"Select * FROM GameScoreBoard WHERE gameName = @GameName ORDER BY GameScoreBoard.Score DESC limit @NumberOfScores";
+
+			using (var connection = new MySqlConnection ()) 
+			{
+				try
+				{
+					connection.ConnectionString = m_connectionString; 
+					connection.Open();
+					IEnumerable<ScoreRecord> result = connection.Query<ScoreRecord>(sql, new {GameName = gameName, NumberOfScores = numberOfScores});
+
+					return result; 
+				}
+
+				catch(MySql.Data.MySqlClient.MySqlException e) 
+				{
+					Console.WriteLine (e.ToString ());
+					return Enumerable.Empty<ScoreRecord>(); 
+				}
+				finally
+				{
+					connection.Close(); 
+				}
+			}
+			
+		}
+
 		public IEnumerable<ScoreRecord> GetAllScoresForUsername (string username)
 		{
 			var sql = @"Select * FROM GameScoreBoard WHERE PlayerName = @PlayerName"; 

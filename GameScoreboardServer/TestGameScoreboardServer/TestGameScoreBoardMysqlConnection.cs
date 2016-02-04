@@ -72,6 +72,26 @@ namespace TestGameScoreboardServer
 			CollectionAssert.AreEqual(sortedResult.ToList(), resultFromDb.ToList()); 
 		}
 
+		[Test()]
+		[Category("integration")]
+		public void GetScoresForGame_GivenValdigGameNameAndANumberOfScores_ReturnsCorrectNumberOfRecordsSorted()
+		{
+			AddMultipleRecordsToDatabase (); 
+
+			var resultFromDb = m_mysqlConnection.GetScoresForGame(m_gameName, 5);
+			var sortedResult = resultFromDb.OrderByDescending(x => x.Score); 
+
+			Assert.IsTrue(resultFromDb.Count() == 5); 
+			CollectionAssert.AreEqual(sortedResult.ToList(), resultFromDb.ToList()); 
+		}
+
+		[Test()]
+		[Category("integration")]
+		[ExpectedException(typeof(ArgumentOutOfRangeException))]
+		public void GetScoresForGame_GivenValdigGameNameAndANumberOfScoresOver50_ThrowsArgumentOutOfRangeException()
+		{
+			var resultFromDb = m_mysqlConnection.GetScoresForGame(m_gameName, 55);
+		}
 
 		private void AddMultipleRecordsToDatabase()
 		{

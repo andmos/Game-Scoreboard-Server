@@ -50,6 +50,24 @@ namespace GameScoreboardServer.Services
 			return Enumerable.Empty<ScoreRecord>(); 
 		}
 
+		public IEnumerable<ScoreRecord> GetScoresForGame (string gameName, int numberOfScores)
+		{
+			if (numberOfScores > 50) 
+			{
+				throw new ArgumentOutOfRangeException (); 
+			}
+
+			List<ScoreRecord> recordFromCache;
+
+			m_gameScoreBoardCache.TryGetValue (gameName.ToLower (), out recordFromCache); 
+
+			if (recordFromCache != null) 
+			{
+				return recordFromCache.OrderByDescending (x => x.Score).Take(numberOfScores); 	
+			}
+			return Enumerable.Empty<ScoreRecord>(); 
+		}
+
         public IEnumerable<ScoreRecord> GetAllScoresForUsername(string username)
         {
             throw new NotImplementedException(); 
