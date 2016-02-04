@@ -3,12 +3,10 @@ sudo: required
 
 services:
   - docker
-#before_script:
-script:
+before_script:
     - chmod +x buildServer.sh
     - ./buildServer.sh build-local
     - ./buildServer.sh build-docker
    # - ./buildServer run-docker
-#script:
-   # - ./buildServer unit-local
-   # - ./buildServer integration-local
+script:
+   - ./buildServer.sh run-integration-docker
