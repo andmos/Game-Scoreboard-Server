@@ -36,7 +36,7 @@ namespace TestGameScoreboardServer.Modules
 			Assert.AreEqual (HttpStatusCode.OK, result.StatusCode); 
 			Assert.AreEqual ("pong", result.Body.AsString());
 		}
-	
+		
 		[Test()]
 		[Category("integration")]
 		public void GameScoreBoard_GivenValidGameNameAndCount_ReturnsCorrectJson()
@@ -71,7 +71,6 @@ namespace TestGameScoreboardServer.Modules
 				with.Header("Content-Type", "application/json");
 				with.JsonBody (scoreRecordObject); 
 			});
-			var text = response.Body.AsString ();
 
 			Assert.AreEqual (HttpStatusCode.Created, response.StatusCode); 
 		
