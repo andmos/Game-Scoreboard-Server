@@ -87,6 +87,8 @@
     <Compile Include="Services\IDataStorage.cs" />
     <Compile Include="Models\ScoreRecord.cs" />
     <Compile Include="Services\GameScoreBoardMysqlConnection.cs" />
+    <Compile Include="Crypto\ICryptation.cs" />
+    <Compile Include="Crypto\StringCipher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -101,4 +103,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Crypto\" />
+  </ItemGroup>
 </Project>

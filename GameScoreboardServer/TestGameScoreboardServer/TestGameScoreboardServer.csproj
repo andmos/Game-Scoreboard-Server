@@ -41,10 +41,14 @@
       <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestGameScoreBoardDataCache.cs" />
-    <Compile Include="TestGameScoreBoardMysqlConnection.cs" />
+    <Compile Include="Services\TestGameScoreBoardDataCache.cs" />
+    <Compile Include="Services\TestGameScoreBoardMysqlConnection.cs" />
+    <Compile Include="Crypto\TestStringCipher.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -56,5 +60,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Crypto\" />
   </ItemGroup>
 </Project>

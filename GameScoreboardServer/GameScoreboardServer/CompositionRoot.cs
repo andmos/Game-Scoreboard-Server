@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using LightInject;
 using GameScoreboardServer.Services;
-using System.Configuration; 
+using System.Configuration;
+using GameScoreboardServer.Crypto; 
 
 namespace GameScoreboardServer
 {
@@ -23,7 +24,7 @@ namespace GameScoreboardServer
 				var mysqlConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
 				serviceRegistry.Register<IDataStorage> (factory => new GameScoreBoardMysqlConnection (mysqlConnectionString));
 			}
-
+			serviceRegistry.Register<ICryptation, StringCipher> (); 
         }
     }
 }
