@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 using GameScoreboardServer.Services;
 using GameScoreboardServer.Models;
 using Nancy.ModelBinding;
-using Nancy.Routing; 
+using Nancy.Routing;
+using GameScoreboardServer.Crypto; 
 
-namespace GameScoreboardServer
+namespace GameScoreboardServer.Modules
 {
     public class ScoreboardModule :  NancyModule 
     {
 		private IDataStorage m_dataStorage; 
+		private ICryptation m_cryptation; 
 
-		public ScoreboardModule(IDataStorage dataStorage) : base("/api/v1")
+		public ScoreboardModule(IDataStorage dataStorage, ICryptation cryptation) : base("/api/v1")
         {
 			StaticConfiguration.DisableErrorTraces = false;
 			m_dataStorage = dataStorage; 
