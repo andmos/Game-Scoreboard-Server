@@ -68,6 +68,7 @@
     <Compile Include="Services\TestGameScoreBoardMysqlConnection.cs" />
     <Compile Include="Crypto\TestStringCipher.cs" />
     <Compile Include="Modules\TestScoreboardModule.cs" />
+    <Compile Include="Modules\TestableLightInjectNancyBootstrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
