@@ -43,17 +43,40 @@ namespace TestGameScoreboardServer.Modules
 		{
 			var bootstrapper = new LightInjectNancyBootstrapper ();
 			var browser = new Browser(bootstrapper, defaults: to => to.Accept("application/json")); 
+			string expectedGameName = "game1"; 
+			int expectedNumberOfResults = 5; 
 
 			var response = browser.Get("/api/v1/gameScoreBoard", with => 
 				{
 					with.HttpRequest();
-					with.Query("gameName", "game1");
-					with.Query("count", "5"); 
+					with.Query("gameName", expectedGameName);
+					with.Query("count", expectedNumberOfResults.ToString()); 
 				});
 			var responseModels = JsonConvert.DeserializeObject<IEnumerable<ScoreRecord>> (response.Body.AsString());
 
-			Assert.IsTrue (responseModels.Count() == 5);  
+			Assert.IsTrue (responseModels.Count() == expectedNumberOfResults);
+			Assert.AreEqual (expectedGameName, responseModels.FirstOrDefault ().GameName); 
 		}
+
+		[Test()]
+		[Category("integration")]
+		public void PlayerScoreBoard_GivenValidUsername_ReturnsCorrectJson()
+		{
+			var bootstrapper = new LightInjectNancyBootstrapper ();
+			var browser = new Browser(bootstrapper, defaults: to => to.Accept("application/json")); 
+			string expectedPlayerName = "player1"; 
+
+			var response = browser.Get("/api/v1/playerScoreBoard", with => 
+				{
+					with.HttpRequest();
+					with.Query("playerName", expectedPlayerName); 
+				});
+			var responseModels = JsonConvert.DeserializeObject<IEnumerable<ScoreRecord>> (response.Body.AsString());
+
+			Assert.IsTrue (responseModels.Count() >= 1); 
+			Assert.AreEqual (expectedPlayerName, responseModels.FirstOrDefault().PlayerName); 
+		}
+
 
 		[Test()]
 		[Category("integration")]
