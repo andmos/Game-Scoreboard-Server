@@ -69,6 +69,7 @@
     <Compile Include="Crypto\TestStringCipher.cs" />
     <Compile Include="Modules\TestScoreboardModule.cs" />
     <Compile Include="Modules\TestableLightInjectNancyBootstrapper.cs" />
+    <Compile Include="Modules\TestDataProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

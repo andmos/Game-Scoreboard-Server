@@ -27,7 +27,7 @@ namespace TestGameScoreboardServer.Modules
 
 			var result = browser.Get("/api/v1/ping", with =>
 				{
-					with.HttpRequest();
+					with.HttpRequest(); 
 				});
 
 			Assert.AreEqual (HttpStatusCode.OK, result.StatusCode);
@@ -38,7 +38,9 @@ namespace TestGameScoreboardServer.Modules
 		[Category("unit")]
 		public void GameScoreBoard_GivenValidGameNameAndCount_ReturnsCorrectJson()
 		{
-			var bootstrapper = new TestableLightInjectNancyBootstrapper ();
+			IDataStorage cache = new GameScoreBoardDataCache (); 
+			TestDataProvider.ProvideTestData (cache); 
+			var bootstrapper = new TestableLightInjectNancyBootstrapper (cache);
 			var browser = new Browser(bootstrapper, defaults: to => to.Accept("application/json"));
 			string expectedGameName = "game1";
 			int expectedNumberOfResults = 1;
@@ -82,7 +84,9 @@ namespace TestGameScoreboardServer.Modules
 		[Category("unit")]
 		public void AddScoreBoardData_GivenValidGameRecordObjectAsJson_ReturnsHttpCreated()
 		{
-			var bootstrapper = new TestableLightInjectNancyBootstrapper ();
+			IDataStorage cache = new GameScoreBoardDataCache (); 
+			TestDataProvider.ProvideTestData (cache); 
+			var bootstrapper = new TestableLightInjectNancyBootstrapper (cache);
 			var browser = new Browser(bootstrapper, defaults: to => to.Accept("application/json"));
 			var scoreRecordObject = new ScoreRecord {
 				GameName = "game5",
@@ -103,7 +107,9 @@ namespace TestGameScoreboardServer.Modules
 		[Category("unit")]
 		public void AddScoreBoardData_GivenValidGameRecordObjectAsJson_ReturnsCorrectObjectFromStorage()
 		{
-			var bootstrapper = new TestableLightInjectNancyBootstrapper ();
+			IDataStorage cache = new GameScoreBoardDataCache (); 
+			TestDataProvider.ProvideTestData (cache); 
+			var bootstrapper = new TestableLightInjectNancyBootstrapper (cache);
 			var browser = new Browser(bootstrapper, defaults: to => to.Accept("application/json"));
 			string expectedGameName = "game5";
 			int expectedCount = 1;
