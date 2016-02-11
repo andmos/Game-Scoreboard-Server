@@ -14,7 +14,7 @@ namespace TestGameScoreboardServer
 
 		IDataStorage m_dataStorage; 
 
-		public TestableLightInjectNancyBootstrapper(IDataStorage dataStorage = null)
+		public TestableLightInjectNancyBootstrapper(IDataStorage dataStorage)
 		{
 			if (dataStorage != null) 
 			{
@@ -22,7 +22,6 @@ namespace TestGameScoreboardServer
 			} else 
 			{
 				m_dataStorage = new GameScoreBoardDataCache (); 
-				AddMultipleRecordsToCache (m_dataStorage); 
 			}
 		}
 
@@ -34,32 +33,6 @@ namespace TestGameScoreboardServer
 			container.Register<ICryptation, StringCipher> (); 
 
 			return container; 
-		}
-
-		private void AddMultipleRecordsToCache(IDataStorage cache)
-		{
-			var records = new List<ScoreRecord> () 
-			{
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 5000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 4000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 6000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 3000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 7000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 9000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 4000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 7000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 9000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player2", Score = 11000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player3", Score = 1000 }, 
-			};
-			foreach (var record in records) 
-			{
-				cache.AddScoreRecordToStorage(record); 
-			}
 		}
 	}
 }
