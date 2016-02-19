@@ -12,7 +12,7 @@ namespace GameScoreboardServer
     public class GameScoreboardServerSelfHost
     {
 
-        public bool Start()
+		public bool Start()
         {
 			Console.WriteLine (string.Format ("Datasource is {0}", ConfigurationManager.AppSettings ["DataStorage"]));
 			return true; 

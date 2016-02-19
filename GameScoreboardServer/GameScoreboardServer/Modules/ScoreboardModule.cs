@@ -16,11 +16,14 @@ namespace GameScoreboardServer.Modules
     {
 		private IDataStorage m_dataStorage; 
 		private ICryptation m_cryptation; 
+		private ILog m_logger; 
 
-		public ScoreboardModule(IDataStorage dataStorage, ICryptation cryptation) : base("/api/v1")
+		public ScoreboardModule(IDataStorage dataStorage, ICryptation cryptation, ILogFactory logger) : base("/api/v1")
         {
 			StaticConfiguration.DisableErrorTraces = false;
 			m_dataStorage = dataStorage; 
+			m_cryptation = cryptation; 
+			m_logger = logger.GetLogger (GetType ()); 
 
 			Get["/ping"] = parameters =>
             {
@@ -42,7 +45,7 @@ namespace GameScoreboardServer.Modules
 				} 
 				catch (Exception e) 
 				{
-					Console.WriteLine(e); 
+					m_logger.Error(e.Message, e);  
 					var response = (Response) e.ToString(); 
 					response.StatusCode = HttpStatusCode.BadRequest; 
 
@@ -63,7 +66,7 @@ namespace GameScoreboardServer.Modules
 					}
 					catch(Exception e)
 					{
-						Console.WriteLine(e); 
+						m_logger.Error(e.Message, e);
 						var response = (Response) e.ToString();
 						response.StatusCode = HttpStatusCode.BadRequest; 
 
@@ -82,7 +85,7 @@ namespace GameScoreboardServer.Modules
 				}
 				catch(Exception e)
 				{
-					Console.WriteLine(e); 
+					m_logger.Error(e.Message, e); 
 					var response = (Response) e.ToString();
 					response.StatusCode = HttpStatusCode.BadRequest; 
 
