@@ -72,10 +72,19 @@ namespace TestGameScoreBoardServer.Tests.Services
 
 		[Test()]
 		[Category("unit")]
+		public void GetScoresForGame_GivenGameNameNotInCache_ReturnsEmptyObject()
+		{
+			var recordsFromCache = m_gameScoreBoardCache.GetScoresForGame ("notValidName", 5); 
+
+			Assert.IsTrue (recordsFromCache.SingleOrDefault() == null); 
+		}
+
+		[Test()]
+		[Category("unit")]
 		[ExpectedException(typeof(ArgumentOutOfRangeException))]
 		public void GetScoresForGame_GivenValdigGameNameAndANumberOfScoresOver50_ThrowsArgumentOutOfRangeException()
 		{
-			var resultFromCache = m_gameScoreBoardCache.GetScoresForGame("game1", 55);
+			m_gameScoreBoardCache.GetScoresForGame("game1", 55);
 		}
 
 		[TearDown]
