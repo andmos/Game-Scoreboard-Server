@@ -131,9 +131,10 @@ namespace GameScoreboardServer
 			}
 		}
 
-		public bool AddScoreRecordToStorage (ScoreRecord record)
+		public int AddScoreRecordToStorage (ScoreRecord record)
 		{
-			var sql = @"INSERT INTO GameScoreBoard(GameName,PlayerName,Score) VALUES (@GameName, @PlayerName, @Score);"; 
+			var sql = @"INSERT INTO GameScoreBoard(GameName,PlayerName,Score) VALUES (@GameName, @PlayerName, @Score);
+			SELECT LAST_INSERT_ID();"; 
 
 			using (var connection = new MySqlConnection ()) 
 			{
@@ -141,14 +142,13 @@ namespace GameScoreboardServer
 				{
 					connection.ConnectionString = m_connectionString;
 					connection.Open(); 
-					connection.Execute(sql, record);
-					return true; 
+					return connection.Query<int>(sql, record).FirstOrDefault(); 
 
 				}
 				catch(MySql.Data.MySqlClient.MySqlException e)
 				{
 					Console.WriteLine (e.ToString ());
-					return false; 
+					return -1; 
 				}
 				finally
 				{

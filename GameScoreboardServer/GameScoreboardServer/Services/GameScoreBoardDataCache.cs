@@ -15,7 +15,7 @@ namespace GameScoreboardServer.Services
 			m_gameScoreBoardCache = new ConcurrentDictionary<string, List<ScoreRecord>> (); 
 		}
 			
-		public bool AddScoreRecordToStorage(ScoreRecord record)
+		public int AddScoreRecordToStorage(ScoreRecord record)
         {
 			List<ScoreRecord> gameScoreRecords;
 			m_gameScoreBoardCache.TryGetValue (record.GameName.ToLower (), out gameScoreRecords); 
@@ -26,7 +26,7 @@ namespace GameScoreboardServer.Services
 			gameScoreRecords.Add(record); 
       
 			m_gameScoreBoardCache.AddOrUpdate(record.GameName, gameScoreRecords, (id, oldScoreList) => gameScoreRecords);
-            return true; 
+			return m_gameScoreBoardCache.Count(); 
 
         }
 

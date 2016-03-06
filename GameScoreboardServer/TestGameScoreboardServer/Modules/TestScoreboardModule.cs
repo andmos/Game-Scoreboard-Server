@@ -130,8 +130,10 @@ namespace TestGameScoreboardServer.Modules
 					with.Query("gameName", expectedGameName);
 					with.Query("count", expectedCount.ToString());
 				});
+			var postRespons = JsonConvert.DeserializeObject<int> (post.Body.AsString ());
 			var responseModels = JsonConvert.DeserializeObject<IEnumerable<ScoreRecord>> (response.Body.AsString());
 
+			Assert.IsTrue (postRespons > -1); 
 			Assert.IsTrue (responseModels.Count() == expectedCount);
 			Assert.AreEqual (expectedGameName, responseModels.FirstOrDefault ().GameName);
 

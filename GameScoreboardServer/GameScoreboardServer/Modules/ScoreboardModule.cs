@@ -38,8 +38,8 @@ namespace GameScoreboardServer.Modules
 				try 
 				{
 					var scoreBoardData = this.Bind<ScoreRecord> (); 
-					m_dataStorage.AddScoreRecordToStorage(scoreBoardData); 
-					var response = (Response) "Created"; 
+					int createdId = m_dataStorage.AddScoreRecordToStorage(scoreBoardData); 
+					var response = Response.AsJson(createdId);
 					response.StatusCode = HttpStatusCode.Created; 
 					return response;
 				} 

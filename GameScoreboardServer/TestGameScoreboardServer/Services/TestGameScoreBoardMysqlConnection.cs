@@ -27,11 +27,11 @@ namespace TestGameScoreboardServer
 
 		[Test()]
 		[Category("integration")]
-		public void AddScoreRecordToStorage_GivenValidScoreRecord_ReturnsTrue()
+		public void AddScoreRecordToStorage_GivenValidScoreRecord_ReturnsIdFromDataStorage()
 		{
 			var exampleRecord = new ScoreRecord { GameName = m_gameName, PlayerName = m_playerName, Score = 1000 };
 
-			Assert.IsTrue (m_mysqlConnection.AddScoreRecordToStorage (exampleRecord));
+			Assert.IsTrue (m_mysqlConnection.AddScoreRecordToStorage (exampleRecord) > -1);
 		}
 
 		[Test()]
