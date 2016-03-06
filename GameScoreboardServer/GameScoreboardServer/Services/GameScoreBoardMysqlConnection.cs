@@ -131,6 +131,32 @@ namespace GameScoreboardServer
 			}
 		}
 
+		public int CountHigherScores(string gameName, int score)
+		{
+			var sql = @"Select COUNT(*) FROM GameScoreBoard WHERE GameName = @GameName AND Score > @Score"; 
+		
+			using (var connection = new MySqlConnection ()) 
+			{
+				try
+				{
+					connection.ConnectionString = m_connectionString; 
+					connection.Open();
+					return connection.Query<int>(sql, new {GameName = gameName, Score = score}).FirstOrDefault(); 
+					 
+				}
+
+				catch(MySql.Data.MySqlClient.MySqlException e) 
+				{
+					Console.WriteLine (e.ToString ());
+					return -1; 
+				}
+				finally
+				{
+					connection.Close(); 
+				}
+			}
+		}
+
 		public int AddScoreRecordToStorage (ScoreRecord record)
 		{
 			var sql = @"INSERT INTO GameScoreBoard(GameName,PlayerName,Score) VALUES (@GameName, @PlayerName, @Score);

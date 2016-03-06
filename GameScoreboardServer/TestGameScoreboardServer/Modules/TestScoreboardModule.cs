@@ -79,6 +79,29 @@ namespace TestGameScoreboardServer.Modules
 			Assert.AreEqual (expectedPlayerName, responseModels.FirstOrDefault().PlayerName);
 		}
 
+		[Test()]
+		[Category("unit")]
+		public void CountHigherScores_GivenValidGameNameAndScore_ReturnsCorrectNumberOfLargerScores()
+		{
+			string mockGameName = "mockGame";
+			int expectedCount = 5; 
+			var mockStorage = new Mock<IDataStorage> ();
+			mockStorage.Setup(x => x.CountHigherScores(mockGameName, 1000)).Returns(expectedCount);
+			var bootstrapper = new TestableLightInjectNancyBootstrapper(mockStorage.Object);
+			var browser = new Browser(bootstrapper, defaults: to => to.Accept("application/json"));
+
+			var response = browser.Get("/api/v1/countHigherScores", with =>
+				{
+					with.HttpRequest();
+					with.Query("gameName", mockGameName);
+					with.Query("score", "1000");
+				});
+			var responseCount = JsonConvert.DeserializeObject<int> (response.Body.AsString());
+
+			Assert.IsTrue (responseCount == expectedCount);
+
+		}
+
 
 		[Test()]
 		[Category("unit")]

@@ -87,6 +87,17 @@ namespace TestGameScoreboardServer
 
 		[Test()]
 		[Category("integration")]
+		public void CountHigherScores_GivenValidGameRecord_ReturnsCorrectCountOfHigherRecords()
+		{
+			AddMultipleRecordsToDatabase (); 
+
+			var resultFromDb = m_mysqlConnection.CountHigherScores ("game5", 2000);
+
+			Assert.IsTrue(resultFromDb >= 2);
+		}
+
+		[Test()]
+		[Category("integration")]
 		[ExpectedException(typeof(ArgumentOutOfRangeException))]
 		public void GetScoresForGame_GivenValdigGameNameAndANumberOfScoresOver50_ThrowsArgumentOutOfRangeException()
 		{
@@ -112,6 +123,9 @@ namespace TestGameScoreboardServer
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 9000 }, 
 				new ScoreRecord { GameName = "game1", PlayerName = "player2", Score = 11000 }, 
 				new ScoreRecord { GameName = "game1", PlayerName = "player3", Score = 1000 }, 
+				new ScoreRecord { GameName = "game5", PlayerName = "player5", Score = 9000 }, 
+				new ScoreRecord { GameName = "game5", PlayerName = "player5", Score = 11000 }, 
+				new ScoreRecord { GameName = "game5", PlayerName = "player5", Score = 1000 }, 
 			};
 			foreach (var record in records) 
 			{

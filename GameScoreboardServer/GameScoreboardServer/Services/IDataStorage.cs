@@ -13,6 +13,7 @@ namespace GameScoreboardServer.Services
 		IEnumerable<ScoreRecord> GetTopTenScoresForGame (string gameName); 
 		IEnumerable<ScoreRecord> GetScoresForGame (string gameName, int numberOfScores); 
         IEnumerable<ScoreRecord> GetAllScoresForUsername(string username);
+		int CountHigherScores (string gameName, int score);
         int AddScoreRecordToStorage(ScoreRecord record);
     }
 }

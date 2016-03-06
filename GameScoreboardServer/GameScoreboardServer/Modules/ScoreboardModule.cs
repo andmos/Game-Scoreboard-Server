@@ -76,12 +76,36 @@ namespace GameScoreboardServer.Modules
 				return Response.AsJson (m_dataStorage.GetAllScoresForGame(gameNameFromQuery)); 
 			};
 
+			Get ["/countHigherScores"] = parameters => 
+			{
+				string gameNameFromQuery = Request.Query ["gameName"];
+				string scoreFromQuery = Request.Query ["score"];
+				int count; 
+				if(int.TryParse(scoreFromQuery, out count))
+				{
+					try
+					{
+						return Response.AsJson(m_dataStorage.CountHigherScores(gameNameFromQuery, count)); 
+					}
+					catch(Exception e)
+					{
+						m_logger.Error(e.Message, e);
+						var response = (Response) e.ToString();
+						response.StatusCode = HttpStatusCode.BadRequest; 
+
+						return response; 
+					}
+				}
+				return Response.AsJson (m_dataStorage.GetAllScoresForGame(gameNameFromQuery)); 
+
+			};
+
 			Get ["/playerScoreBoard"] = parameters => 
 			{
 				try
 				{
 					string playerNameFromQuery = Request.Query ["playerName"]; 
-					return Response.AsJson (m_dataStorage.GetAllScoresForUsername(playerNameFromQuery)); 	
+					return Response.AsJson(m_dataStorage.GetAllScoresForUsername(playerNameFromQuery)); 	
 				}
 				catch(Exception e)
 				{

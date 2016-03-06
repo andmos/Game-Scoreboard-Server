@@ -6,7 +6,7 @@ using GameScoreboardServer.Models;
 
 namespace GameScoreboardServer.Services
 {
-    public class GameScoreBoardDataCache : IDataStorage
+	public class GameScoreBoardDataCache : IDataStorage
     {
         private readonly ConcurrentDictionary<string, List<ScoreRecord>> m_gameScoreBoardCache;
 
@@ -72,6 +72,11 @@ namespace GameScoreboardServer.Services
         {
             throw new NotImplementedException(); 
         }
+
+		public int CountHigherScores (string gameName, int score)
+		{
+			throw new NotImplementedException ();
+		}
 
 		public void ClearCache()
 		{
