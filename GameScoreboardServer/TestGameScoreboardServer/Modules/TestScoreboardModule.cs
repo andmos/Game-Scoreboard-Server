@@ -101,8 +101,7 @@ namespace TestGameScoreboardServer.Modules
 			Assert.IsTrue (responseCount == expectedCount);
 
 		}
-
-
+			
 		[Test()]
 		[Category("unit")]
 		public void AddScoreBoardData_GivenValidGameRecordObjectAsJson_ReturnsHttpCreated()

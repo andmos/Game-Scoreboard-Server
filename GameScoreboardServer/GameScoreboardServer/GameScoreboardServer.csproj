@@ -93,6 +93,7 @@
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\ILogFactory.cs" />
     <Compile Include="Logging\Log4NetLogFactory.cs" />
+    <Compile Include="Services\DataStorageProfiler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

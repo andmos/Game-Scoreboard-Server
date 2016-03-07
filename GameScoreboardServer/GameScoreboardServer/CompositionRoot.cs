@@ -29,6 +29,7 @@ namespace GameScoreboardServer
 			serviceRegistry.Register<Type, ILog>((factory, type) => factory.GetInstance<ILogFactory>().GetLogger(type));
 			serviceRegistry.RegisterConstructorDependency(
 				(factory, info) => factory.GetInstance<Type, ILog>(info.Member.DeclaringType));   
+			serviceRegistry.Decorate<IDataStorage, DataStorageProfiler> ();
         }
     }
 }
