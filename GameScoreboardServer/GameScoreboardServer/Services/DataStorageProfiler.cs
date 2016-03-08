@@ -13,10 +13,10 @@ namespace GameScoreboardServer.Services
 		private IDataStorage m_dataStorage; 
 		private ILog m_logger;  
 
-		public DataStorageProfiler (IDataStorage dataStorage, ILogFactory logger)
+		public DataStorageProfiler (IDataStorage dataStorage, ILog logger)
 		{
 			m_dataStorage = dataStorage; 
-			m_logger = logger.GetLogger(dataStorage.GetType());
+			m_logger = logger;
 		}
 
 		public IEnumerable<ScoreRecord> GetAllScoresForGame (string gameName)
