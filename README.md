@@ -10,4 +10,6 @@ Try it out with [Vagrant](https://www.vagrantup.com/):
     ./buildServer.sh run-dockerAndLinkToDb
     curl localhost:5000/v1/api/ping
 
+[API](API.md)
+
 [![Build Status](https://travis-ci.org/andmos/Game-Scoreboard-Server.svg?branch=master)](https://travis-ci.org/andmos/Game-Scoreboard-Server)
