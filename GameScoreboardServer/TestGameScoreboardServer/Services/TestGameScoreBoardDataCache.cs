@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace TestGameScoreBoardServer.Tests.Services
 {
-	[TestFixture ()]
+	[TestFixture]
 	public class TestGameScoreBoardDataCache 
 	{     
 		private GameScoreBoardDataCache m_gameScoreBoardCache; 
@@ -21,7 +21,7 @@ namespace TestGameScoreBoardServer.Tests.Services
 			m_gameScoreBoardCache = new GameScoreBoardDataCache (); 
 		}
 
-		[Test()]
+		[Test]
 		[Category("unit")]
 		public void AddScoreRecordToStorage_GivenGameNameAndSingleScoreRecord_RecordGetsAddedToCache()
 		{
@@ -33,7 +33,7 @@ namespace TestGameScoreBoardServer.Tests.Services
 			Assert.AreEqual(m_gameScoreBoardCache.GetAllScoresForGame(gameName).FirstOrDefault().PlayerName, record.PlayerName);
 		}
 
-		[Test()]
+		[Test]
 		[Category("unit")]
 		public void GetAllScoresForGame_GivenValidGameName_ReturnsAllScoresForGame()
 		{
@@ -44,7 +44,7 @@ namespace TestGameScoreBoardServer.Tests.Services
 			Assert.IsTrue (recordsFromCache.Count () == 15); 
 		}
 
-		[Test()]
+		[Test]
 		[Category("unit")]
 		public void GetTopTenScoresForGame_GivenValdigGameName_ReturnsTopTenRecordsSorted()
 		{
@@ -57,7 +57,7 @@ namespace TestGameScoreBoardServer.Tests.Services
 			CollectionAssert.AreEqual (sorted.ToList(), recordsFromCache.ToList()); 
 		}
 			
-		[Test()]
+		[Test]
 		[Category("unit")]
 		public void GetScoresForGame_GivenValdigGameNameAndANumberOfScores_ReturnsCorrectNumberOfRecordsSorted()
 		{
@@ -70,7 +70,7 @@ namespace TestGameScoreBoardServer.Tests.Services
 			CollectionAssert.AreEqual (sorted.ToList(), recordsFromCache.ToList()); 
 		}
 
-		[Test()]
+		[Test]
 		[Category("unit")]
 		public void GetScoresForGame_GivenGameNameNotInCache_ReturnsEmptyObject()
 		{
@@ -79,7 +79,7 @@ namespace TestGameScoreBoardServer.Tests.Services
 			Assert.IsTrue (recordsFromCache.SingleOrDefault() == null); 
 		}
 
-		[Test()]
+		[Test]
 		[Category("unit")]
 		[ExpectedException(typeof(ArgumentOutOfRangeException))]
 		public void GetScoresForGame_GivenValdigGameNameAndANumberOfScoresOver50_ThrowsArgumentOutOfRangeException()

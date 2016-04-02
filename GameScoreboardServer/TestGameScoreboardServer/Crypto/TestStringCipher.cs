@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace TestGameScoreboardServer
 {
-	[TestFixture()]
+	[TestFixture]
 	public class TestStringCipher
 	{
 		private const string EncryptionKey = "0611a253-2056-416b-acd7-288397d26bc9"; 
@@ -19,7 +19,7 @@ namespace TestGameScoreboardServer
 			m_scoreRecord = new ScoreRecord { PlayerName = "player1", GameName = "Game1", Score = 5000 }; 
 		}
 
-		[Test()]
+		[Test]
 		[Category("unit")]
 		public void Encrypy_GivenValidJsonModel_ReturnsEncryptetModel()
 		{
@@ -30,7 +30,7 @@ namespace TestGameScoreboardServer
 			Assert.AreNotEqual (jsonString, encryptet); 
 		}
 
-		[Test()]
+		[Test]
 		[Category("unit")]
 		public void Decrypt_GivenValidEncryptetJsonModel_ReturnsDecryptedModel()
 		{

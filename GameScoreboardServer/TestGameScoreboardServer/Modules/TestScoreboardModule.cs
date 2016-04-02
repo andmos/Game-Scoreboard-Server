@@ -15,10 +15,10 @@ using GameScoreboardServer.Services;
 namespace TestGameScoreboardServer.Modules
 {
 
-	[TestFixture()]
+	[TestFixture]
 	public class TestScoreboardModule
 	{
-		[Test()]
+		[Test]
 		[Category("unit")]
 		public void Ping_GivenCorrectRoute_ReturnsPong()
 		{
@@ -34,7 +34,7 @@ namespace TestGameScoreboardServer.Modules
 			Assert.AreEqual ("pong", result.Body.AsString());
 		}
 
-		[Test()]
+		[Test]
 		[Category("unit")]
 		public void GameScoreBoard_GivenValidGameNameAndCount_ReturnsCorrectJson()
 		{
@@ -57,7 +57,29 @@ namespace TestGameScoreboardServer.Modules
 			Assert.AreEqual (expectedGameName, responseModels.FirstOrDefault ().GameName);
 		}
 
-		[Test()]
+		[Test]
+		[Category("unit")]
+		public void GameScoreBoard_GivenValidGameNameAndCountOverAllowedNumber_ReturnsBadRequestStatusCode()
+		{
+			IDataStorage cache = new GameScoreBoardDataCache (); 
+			TestDataProvider.ProvideTestData (cache); 
+			var bootstrapper = new TestableLightInjectNancyBootstrapper (cache);
+			var browser = new Browser(bootstrapper, defaults: to => to.Accept("application/json"));
+			string expectedGameName = "game1";
+			int illegalNumberOfResults = 60;
+
+			var response = browser.Get("/api/v1/gameScoreBoard", with =>
+				{
+					with.HttpRequest();
+					with.Query("gameName", expectedGameName);
+					with.Query("count", illegalNumberOfResults.ToString());
+				});
+			var responseCode = response.StatusCode; 
+
+			Assert.IsTrue (responseCode == HttpStatusCode.BadRequest);
+		}
+
+		[Test]
 		[Category("unit")]
 		public void PlayerScoreBoard_GivenValidUsername_ReturnsCorrectJson()
 		{
@@ -79,7 +101,7 @@ namespace TestGameScoreboardServer.Modules
 			Assert.AreEqual (expectedPlayerName, responseModels.FirstOrDefault().PlayerName);
 		}
 
-		[Test()]
+		[Test]
 		[Category("unit")]
 		public void CountHigherScores_GivenValidGameNameAndScore_ReturnsCorrectNumberOfLargerScores()
 		{
@@ -102,7 +124,7 @@ namespace TestGameScoreboardServer.Modules
 
 		}
 			
-		[Test()]
+		[Test]
 		[Category("unit")]
 		public void AddScoreBoardData_GivenValidGameRecordObjectAsJson_ReturnsHttpCreated()
 		{
@@ -125,7 +147,7 @@ namespace TestGameScoreboardServer.Modules
 
 		}
 
-		[Test()]
+		[Test]
 		[Category("unit")]
 		public void AddScoreBoardData_GivenValidGameRecordObjectAsJson_ReturnsCorrectObjectFromStorage()
 		{

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace TestGameScoreboardServer
 {
-	[TestFixture()]
+	[TestFixture]
 	public class TestGameScoreBoardMysqlConnection
 	{
 
@@ -25,7 +25,7 @@ namespace TestGameScoreboardServer
 			m_mysqlConnection = new GameScoreBoardMysqlConnection (m_connectionString); 
 		}
 
-		[Test()]
+		[Test]
 		[Category("integration")]
 		public void AddScoreRecordToStorage_GivenValidScoreRecord_ReturnsIdFromDataStorage()
 		{
@@ -34,7 +34,7 @@ namespace TestGameScoreboardServer
 			Assert.IsTrue (m_mysqlConnection.AddScoreRecordToStorage (exampleRecord) > -1);
 		}
 
-		[Test()]
+		[Test]
 		[Category("integration")]
 		public void GetAllScoresForUsername_GivenValidUsername_ReturnsScoreForUsername()
 		{
@@ -49,7 +49,7 @@ namespace TestGameScoreboardServer
 			Assert.AreEqual (1000, playerRecord.Score	); 
 		}
 
-		[Test()]
+		[Test]
 		[Category("integration")]
 		public void GetAllScoresForGame_GivenValidGame_ReturnsScoreForGame()
 		{
@@ -59,7 +59,7 @@ namespace TestGameScoreboardServer
 			Assert.AreEqual (m_gameName, resultFromDb.FirstOrDefault().GameName);  
 		}
 
-		[Test()]
+		[Test]
 		[Category("integration")]
 		public void GetTopTenScoresForGame_GivenListOfScores_ReturnsSortedListWIthTopTenScores()
 		{
@@ -72,7 +72,7 @@ namespace TestGameScoreboardServer
 			CollectionAssert.AreEqual(sortedResult.ToList(), resultFromDb.ToList()); 
 		}
 
-		[Test()]
+		[Test]
 		[Category("integration")]
 		public void GetScoresForGame_GivenValdigGameNameAndANumberOfScores_ReturnsCorrectNumberOfRecordsSorted()
 		{
@@ -85,7 +85,7 @@ namespace TestGameScoreboardServer
 			CollectionAssert.AreEqual(sortedResult.ToList(), resultFromDb.ToList()); 
 		}
 
-		[Test()]
+		[Test]
 		[Category("integration")]
 		public void CountHigherScores_GivenValidGameRecord_ReturnsCorrectCountOfHigherRecords()
 		{
@@ -96,7 +96,7 @@ namespace TestGameScoreboardServer
 			Assert.IsTrue(resultFromDb >= 2);
 		}
 
-		[Test()]
+		[Test]
 		[Category("integration")]
 		[ExpectedException(typeof(ArgumentOutOfRangeException))]
 		public void GetScoresForGame_GivenValdigGameNameAndANumberOfScoresOver50_ThrowsArgumentOutOfRangeException()
