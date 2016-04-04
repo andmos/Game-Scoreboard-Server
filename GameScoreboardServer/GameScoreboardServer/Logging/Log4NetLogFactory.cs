@@ -14,7 +14,7 @@ namespace GameScoreboardServer
 		public ILog GetLogger(Type type)
 		{            
 			var logger = LogManager.GetLogger(type);            
-			return new Log(logger.Info, logger.Debug, logger.Error);
+			return new NancyTraceLog (new Log(logger.Info, logger.Debug, logger.Error));
 		}
 	}
 }

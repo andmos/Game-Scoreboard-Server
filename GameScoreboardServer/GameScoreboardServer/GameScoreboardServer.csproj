@@ -95,6 +95,8 @@
     <Compile Include="Logging\Log4NetLogFactory.cs" />
     <Compile Include="Services\DataStorageProfiler.cs" />
     <Compile Include="BootStrapper.cs" />
+    <Compile Include="CurrentNancyContext.cs" />
+    <Compile Include="Logging\NancyTraceLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

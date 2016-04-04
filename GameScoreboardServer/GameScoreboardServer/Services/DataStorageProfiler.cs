@@ -24,7 +24,7 @@ namespace GameScoreboardServer.Services
 			var stopWatch = Stopwatch.StartNew ();
 			var scores = m_dataStorage.GetAllScoresForGame (gameName);
 			stopWatch.Stop (); 
-			m_logger.Info (string.Format ("GetAllScoresForGame: Call took {0} Ms", stopWatch.ElapsedMilliseconds));
+			m_logger.Info (string.Format ("{0} GetAllScoresForGame: Call took {1} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
 			return scores; 
 		}
 
@@ -33,7 +33,7 @@ namespace GameScoreboardServer.Services
 			var stopWatch = Stopwatch.StartNew ();
 			var scores = m_dataStorage.GetTopTenScoresForGame (gameName);
 			stopWatch.Stop ();
-			m_logger.Info(string.Format ("GetTopTenScoresForGame: Call took {0} Ms", stopWatch.ElapsedMilliseconds));
+			m_logger.Info(string.Format ("{0} GetTopTenScoresForGame: Call took {1} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
 			return(scores);
 		}
 
@@ -42,7 +42,7 @@ namespace GameScoreboardServer.Services
 			var stopWatch = Stopwatch.StartNew ();
 			var scores = m_dataStorage.GetScoresForGame (gameName, numberOfScores);
 			stopWatch.Stop ();
-			m_logger.Info(string.Format ("GetScoresForGame: Call took {0} Ms", stopWatch.ElapsedMilliseconds));
+			m_logger.Info(string.Format ("{0} GetScoresForGame: Call took {1} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
 			return(scores);
 		}
 
@@ -51,7 +51,7 @@ namespace GameScoreboardServer.Services
 			var stopWatch = Stopwatch.StartNew ();
 			var scores = m_dataStorage.GetAllScoresForUsername (username);
 			stopWatch.Stop ();
-			m_logger.Info(string.Format ("GetAllScoresForUsername: Call took {0} Ms", stopWatch.ElapsedMilliseconds));
+			m_logger.Info(string.Format ("{0} GetAllScoresForUsername: Call took {1} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
 			return(scores);
 		}
 
@@ -60,7 +60,7 @@ namespace GameScoreboardServer.Services
 			var stopWatch = Stopwatch.StartNew ();
 			var scores = m_dataStorage.CountHigherScores(gameName, score);
 			stopWatch.Stop ();
-			m_logger.Info(string.Format ("CountHigherScores: Call took {0} Ms", stopWatch.ElapsedMilliseconds));
+			m_logger.Info(string.Format ("{0} CountHigherScores: Call took {0} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
 			return(scores);
 		}
 
@@ -69,7 +69,7 @@ namespace GameScoreboardServer.Services
 			var stopWatch = Stopwatch.StartNew ();
 			var id = m_dataStorage.AddScoreRecordToStorage(record);
 			stopWatch.Stop ();
-			m_logger.Info(string.Format ("AddScoreRecordToStorage: Call took {0} Ms", stopWatch.ElapsedMilliseconds));
+			m_logger.Info(string.Format ("{0} AddScoreRecordToStorage: Call took {0} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
 			return(id);
 		}
 			
