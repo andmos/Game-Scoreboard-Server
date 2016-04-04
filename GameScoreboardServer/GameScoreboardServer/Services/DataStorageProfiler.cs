@@ -60,7 +60,7 @@ namespace GameScoreboardServer.Services
 			var stopWatch = Stopwatch.StartNew ();
 			var scores = m_dataStorage.CountHigherScores(gameName, score);
 			stopWatch.Stop ();
-			m_logger.Info(string.Format ("{0} CountHigherScores: Call took {0} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
+			m_logger.Info(string.Format ("{0} CountHigherScores: Call took {1} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
 			return(scores);
 		}
 
@@ -69,7 +69,7 @@ namespace GameScoreboardServer.Services
 			var stopWatch = Stopwatch.StartNew ();
 			var id = m_dataStorage.AddScoreRecordToStorage(record);
 			stopWatch.Stop ();
-			m_logger.Info(string.Format ("{0} AddScoreRecordToStorage: Call took {0} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
+			m_logger.Info(string.Format ("{0} AddScoreRecordToStorage: Call took {1} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
 			return(id);
 		}
 			
