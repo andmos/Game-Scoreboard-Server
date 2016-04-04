@@ -1,3 +1,5 @@
+#! /bin/bash
+
 docker run -it --link gamescoreboarddb:mysql \
    --rm mysql:5.6 \
    sh -c 'exec mysqldump -h "$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" gamescoreboarddb' > gamescoreboarddb_dump.sql
