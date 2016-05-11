@@ -74,7 +74,7 @@
       <HintPath>..\packages\Nancy.Hosting.Self.1.4.1\lib\net40\Nancy.Hosting.Self.dll</HintPath>
     </Reference>
     <Reference Include="LightInject">
-      <HintPath>..\packages\LightInject.4.0.8\lib\net45\LightInject.dll</HintPath>
+      <HintPath>..\packages\LightInject.4.0.9\lib\net45\LightInject.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
