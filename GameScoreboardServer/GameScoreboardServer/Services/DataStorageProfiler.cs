@@ -10,8 +10,8 @@ namespace GameScoreboardServer.Services
 	public class DataStorageProfiler : IDataStorage
 	{
 
-		private IDataStorage m_dataStorage; 
-		private ILog m_logger;  
+		private readonly IDataStorage m_dataStorage;
+		private readonly ILog m_logger;
 
 		public DataStorageProfiler (IDataStorage dataStorage, ILog logger)
 		{

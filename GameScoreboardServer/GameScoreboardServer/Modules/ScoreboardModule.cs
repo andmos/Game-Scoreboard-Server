@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using GameScoreboardServer.Services;
 using GameScoreboardServer.Models;
@@ -14,9 +15,9 @@ namespace GameScoreboardServer.Modules
 {
     public class ScoreboardModule :  NancyModule 
     {
-		private IDataStorage m_dataStorage; 
-		private ICryptation m_cryptation; 
-		private ILog m_logger; 
+		private readonly IDataStorage m_dataStorage;
+		private readonly ICryptation m_cryptation;
+		private readonly ILog m_logger;
 
 		public ScoreboardModule(IDataStorage dataStorage, ICryptation cryptation, ILogFactory logger) : base("/api/v1")
         {
