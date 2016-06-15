@@ -33,9 +33,9 @@ namespace GameScoreboardServer
 					return result; 
 				}
 
-				catch(MySql.Data.MySqlClient.MySqlException e) 
+				catch(MySqlException e) 
 				{
-					Console.WriteLine (e.ToString ());
+					Console.WriteLine (e);
 					return Enumerable.Empty<ScoreRecord>(); 
 				}
 				finally
@@ -60,9 +60,9 @@ namespace GameScoreboardServer
 					return result; 
 				}
 
-				catch(MySql.Data.MySqlClient.MySqlException e) 
+				catch(MySqlException e) 
 				{
-					Console.WriteLine (e.ToString ());
+					Console.WriteLine (e);
 					return Enumerable.Empty<ScoreRecord>(); 
 				}
 				finally
@@ -91,9 +91,9 @@ namespace GameScoreboardServer
 					return result; 
 				}
 
-				catch(MySql.Data.MySqlClient.MySqlException e) 
+				catch(MySqlException e) 
 				{
-					Console.WriteLine (e.ToString ());
+					Console.WriteLine (e);
 					return Enumerable.Empty<ScoreRecord>(); 
 				}
 				finally
@@ -119,9 +119,9 @@ namespace GameScoreboardServer
 					return result; 
 				}
 
-				catch(MySql.Data.MySqlClient.MySqlException e) 
+				catch(MySqlException e) 
 				{
-					Console.WriteLine (e.ToString ());
+					Console.WriteLine (e);
 					return Enumerable.Empty<ScoreRecord>(); 
 				}
 				finally
@@ -145,9 +145,9 @@ namespace GameScoreboardServer
 					 
 				}
 
-				catch(MySql.Data.MySqlClient.MySqlException e) 
+				catch(MySqlException e) 
 				{
-					Console.WriteLine (e.ToString ());
+					Console.WriteLine (e);
 					return -1; 
 				}
 				finally
@@ -171,9 +171,9 @@ namespace GameScoreboardServer
 					return connection.Query<int>(sql, record).FirstOrDefault(); 
 
 				}
-				catch(MySql.Data.MySqlClient.MySqlException e)
+				catch(MySqlException e)
 				{
-					Console.WriteLine (e.ToString ());
+					Console.WriteLine (e);
 					return -1; 
 				}
 				finally
