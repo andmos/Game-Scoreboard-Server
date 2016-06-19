@@ -20,7 +20,7 @@ namespace GameScoreboardServer
 
 		public IEnumerable<ScoreRecord> GetAllScoresForGame (string gameName)
 		{
-			var sql = @"Select * FROM GameScoreBoard WHERE gameName = @GameName";
+			var sql = @"Select GameName, PlayerName, Score, recordId FROM GameScoreBoard WHERE gameName = @GameName";
 
 			using (var connection = new MySqlConnection ()) 
 			{
@@ -47,7 +47,7 @@ namespace GameScoreboardServer
 
 		public IEnumerable<ScoreRecord> GetTopTenScoresForGame(string gameName)
 		{
-			var sql = @"Select * FROM GameScoreBoard WHERE gameName = @GameName ORDER BY GameScoreBoard.Score DESC limit 10";
+			var sql = @"Select GameName, PlayerName, Score, recordId FROM GameScoreBoard WHERE gameName = @GameName ORDER BY GameScoreBoard.Score DESC limit 10";
 
 			using (var connection = new MySqlConnection ()) 
 			{
@@ -78,7 +78,7 @@ namespace GameScoreboardServer
 			{
 				throw new ArgumentOutOfRangeException (); 
 			}
-			var sql = @"Select * FROM GameScoreBoard WHERE gameName = @GameName ORDER BY GameScoreBoard.Score DESC limit @NumberOfScores";
+			var sql = @"Select GameName, PlayerName, Score, recordId FROM GameScoreBoard WHERE gameName = @GameName ORDER BY GameScoreBoard.Score DESC limit @NumberOfScores";
 
 			using (var connection = new MySqlConnection ()) 
 			{
@@ -106,7 +106,7 @@ namespace GameScoreboardServer
 
 		public IEnumerable<ScoreRecord> GetAllScoresForUsername (string username)
 		{
-			var sql = @"Select * FROM GameScoreBoard WHERE PlayerName = @PlayerName"; 
+			var sql = @"Select GameName, PlayerName, Score, recordId FROM GameScoreBoard WHERE PlayerName = @PlayerName"; 
 
 			using (var connection = new MySqlConnection ()) 
 			{
