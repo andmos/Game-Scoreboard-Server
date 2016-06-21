@@ -85,7 +85,7 @@
     <Compile Include="Services\GameScoreBoardDataCache.cs" />
     <Compile Include="Services\IDataStorage.cs" />
     <Compile Include="Models\ScoreRecord.cs" />
-    <Compile Include="Services\GameScoreBoardMysqlConnection.cs" />
+    <Compile Include="Services\GameScoreBoardMysqlRepository.cs" />
     <Compile Include="Crypto\ICryptation.cs" />
     <Compile Include="Crypto\StringCipher.cs" />
     <Compile Include="Modules\ScoreboardModule.cs" />
@@ -97,6 +97,8 @@
     <Compile Include="BootStrapper.cs" />
     <Compile Include="CurrentNancyContext.cs" />
     <Compile Include="Logging\NancyTraceLog.cs" />
+    <Compile Include="Services\IConnectionFactory.cs" />
+    <Compile Include="Services\MySqlConnectionFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

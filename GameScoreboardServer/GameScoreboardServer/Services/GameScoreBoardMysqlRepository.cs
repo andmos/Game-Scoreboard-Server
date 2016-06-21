@@ -8,13 +8,13 @@ using Dapper;
 
 namespace GameScoreboardServer
 {
-	public class GameScoreBoardMysqlConnection : IDataStorage 
+	public class GameScoreBoardMysqlRepository : IDataStorage 
 	{
-		private readonly string m_connectionString; 
+		private readonly IConnectionFactory m_connectionFactory; 
 
-		public GameScoreBoardMysqlConnection (string connecetionString)
+		public GameScoreBoardMysqlRepository (IConnectionFactory connectionFactory)
 		{
-			m_connectionString = connecetionString; 
+			m_connectionFactory = connectionFactory; 
 		}
 			
 
@@ -22,12 +22,10 @@ namespace GameScoreboardServer
 		{
 			var sql = @"Select GameName, PlayerName, Score, recordId FROM GameScoreBoard WHERE gameName = @GameName";
 
-			using (var connection = new MySqlConnection ()) 
+			using (var connection = m_connectionFactory.GetOpenConnection()) 
 			{
 				try
 				{
-					connection.ConnectionString = m_connectionString; 
-					connection.Open();
 					IEnumerable<ScoreRecord> result = connection.Query<ScoreRecord>(sql, new {GameName = gameName}); 
 
 					return result; 
@@ -49,12 +47,10 @@ namespace GameScoreboardServer
 		{
 			var sql = @"Select GameName, PlayerName, Score, recordId FROM GameScoreBoard WHERE gameName = @GameName ORDER BY GameScoreBoard.Score DESC limit 10";
 
-			using (var connection = new MySqlConnection ()) 
+			using (var connection = m_connectionFactory.GetOpenConnection())
 			{
 				try
 				{
-					connection.ConnectionString = m_connectionString; 
-					connection.Open();
 					IEnumerable<ScoreRecord> result = connection.Query<ScoreRecord>(sql, new {GameName = gameName}); 
 
 					return result; 
@@ -80,12 +76,10 @@ namespace GameScoreboardServer
 			}
 			var sql = @"Select GameName, PlayerName, Score, recordId FROM GameScoreBoard WHERE gameName = @GameName ORDER BY GameScoreBoard.Score DESC limit @NumberOfScores";
 
-			using (var connection = new MySqlConnection ()) 
+			using (var connection = m_connectionFactory.GetOpenConnection())
 			{
 				try
 				{
-					connection.ConnectionString = m_connectionString; 
-					connection.Open();
 					IEnumerable<ScoreRecord> result = connection.Query<ScoreRecord>(sql, new {GameName = gameName, NumberOfScores = numberOfScores});
 
 					return result; 
@@ -108,12 +102,10 @@ namespace GameScoreboardServer
 		{
 			var sql = @"Select GameName, PlayerName, Score, recordId FROM GameScoreBoard WHERE PlayerName = @PlayerName"; 
 
-			using (var connection = new MySqlConnection ()) 
+			using (var connection = m_connectionFactory.GetOpenConnection())
 			{
 				try
 				{
-					connection.ConnectionString = m_connectionString; 
-					connection.Open();
 					IEnumerable<ScoreRecord> result = connection.Query<ScoreRecord>(sql, new {PlayerName = username}); 
 
 					return result; 
@@ -135,14 +127,11 @@ namespace GameScoreboardServer
 		{
 			var sql = @"Select COUNT(*) FROM GameScoreBoard WHERE GameName = @GameName AND Score > @Score"; 
 		
-			using (var connection = new MySqlConnection ()) 
+			using (var connection = m_connectionFactory.GetOpenConnection())
 			{
 				try
 				{
-					connection.ConnectionString = m_connectionString; 
-					connection.Open();
 					return connection.Query<int>(sql, new {GameName = gameName, Score = score}).FirstOrDefault(); 
-					 
 				}
 
 				catch(MySqlException e) 
@@ -162,12 +151,10 @@ namespace GameScoreboardServer
 			var sql = @"INSERT INTO GameScoreBoard(GameName,PlayerName,Score) VALUES (@GameName, @PlayerName, @Score);
 			SELECT LAST_INSERT_ID();"; 
 
-			using (var connection = new MySqlConnection ()) 
+			using (var connection = m_connectionFactory.GetOpenConnection())
 			{
 				try
 				{
-					connection.ConnectionString = m_connectionString;
-					connection.Open(); 
 					return connection.Query<int>(sql, record).FirstOrDefault(); 
 
 				}

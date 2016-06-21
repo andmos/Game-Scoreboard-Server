@@ -19,10 +19,11 @@ namespace GameScoreboardServer
 			{
 				serviceRegistry.Register<IDataStorage, GameScoreBoardDataCache> (); 
 			}
-			if (dataStorage.ToLower ().Equals ("database")) 
+			if (dataStorage.ToLower().Equals("database"))
 			{
 				var mysqlConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
-				serviceRegistry.Register<IDataStorage> (factory => new GameScoreBoardMysqlConnection (mysqlConnectionString));
+				serviceRegistry.Register<IConnectionFactory>(factory => new MySqlConnectionFactory(mysqlConnectionString));
+				serviceRegistry.Register<IDataStorage>(factory => new GameScoreBoardMysqlRepository(factory.GetInstance<IConnectionFactory>()));
 			}
 			serviceRegistry.Register<ICryptation, StringCipher> (); 
 			serviceRegistry.Register<ILogFactory, Log4NetLogFactory>(new PerContainerLifetime());
