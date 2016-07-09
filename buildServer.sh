@@ -2,6 +2,17 @@
 
 # I guess I will scrap this later.
 
+declare -a arr=("build-local" "build-docker" "run-docker" "run-dockerAndLinkToDb" "run-integration-docker")
+
+if [ $# -eq 0 ]; then 
+   echo "Commands:"
+   for i in "${arr[@]}"
+   do
+         echo "$i"
+           # or do whatever with individual element of the array
+   done 
+fi
+
 function build-local()
 {
     nuget restore GameScoreboardServer/GameScoreboardServer.sln
@@ -33,6 +44,5 @@ function run-integration-docker()
    run-dockerAndLinkToDb
    mono GameScoreboardServer/packages/NUnit.Runners.2.6.4/tools/nunit-console.exe GameScoreboardServer/TestGameScoreboardServer/bin/Debug/Test*.dll
 }
-
 
 "$@"
