@@ -34,7 +34,7 @@ namespace GameScoreboardServer.Services
 			var scores = m_dataStorage.GetTopTenScoresForGame (gameName);
 			stopWatch.Stop ();
 			m_logger.Info(string.Format ("{0} GetTopTenScoresForGame: Call took {1} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
-			return(scores);
+			return scores;
 		}
 
 		public IEnumerable<ScoreRecord> GetScoresForGame (string gameName, int numberOfScores)
@@ -43,7 +43,7 @@ namespace GameScoreboardServer.Services
 			var scores = m_dataStorage.GetScoresForGame (gameName, numberOfScores);
 			stopWatch.Stop ();
 			m_logger.Info(string.Format ("{0} GetScoresForGame: Call took {1} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
-			return(scores);
+			return scores;
 		}
 
 		public IEnumerable<ScoreRecord> GetAllScoresForUsername (string username)
@@ -52,7 +52,7 @@ namespace GameScoreboardServer.Services
 			var scores = m_dataStorage.GetAllScoresForUsername (username);
 			stopWatch.Stop ();
 			m_logger.Info(string.Format ("{0} GetAllScoresForUsername: Call took {1} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
-			return(scores);
+			return scores;
 		}
 
 		public int CountHigherScores (string gameName, int score)
@@ -61,7 +61,16 @@ namespace GameScoreboardServer.Services
 			var scores = m_dataStorage.CountHigherScores(gameName, score);
 			stopWatch.Stop ();
 			m_logger.Info(string.Format ("{0} CountHigherScores: Call took {1} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
-			return(scores);
+			return scores;
+		}
+
+		public IEnumerable<string> GetAllGameNames()
+		{
+			var stopWatch = Stopwatch.StartNew();
+			var gameNames = m_dataStorage.GetAllGameNames();
+			stopWatch.Stop();
+			m_logger.Info(string.Format("{0} GetAllGameNames: Call took {1} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
+			return gameNames;
 		}
 
 		public int AddScoreRecordToStorage (ScoreRecord record)
@@ -72,7 +81,8 @@ namespace GameScoreboardServer.Services
 			m_logger.Info(string.Format ("{0} AddScoreRecordToStorage: Call took {1} Ms", m_dataStorage.GetType(), stopWatch.ElapsedMilliseconds));
 			return(id);
 		}
-			
+
+
 	}
 }
 

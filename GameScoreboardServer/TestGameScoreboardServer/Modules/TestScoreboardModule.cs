@@ -149,6 +149,28 @@ namespace TestGameScoreboardServer.Modules
 
 		[Test]
 		[Category("unit")]
+		public void GameNames_ReturnsCorrectGameNames() 
+		{
+			IDataStorage cache = new GameScoreBoardDataCache();
+			TestDataProvider.ProvideTestData(cache);
+			var bootstrapper = new TestableLightInjectNancyBootstrapper(cache);
+			var browser = new Browser(bootstrapper, defaults: to => to.Accept("application/json"));
+			var expectedGameNames = new List<string> { "game1", "game2", "game3" };
+
+			var response = browser.Get("api/v1/gameNames", with =>
+			{
+				with.HttpRequest();
+			});
+			var responseObjects = JsonConvert.DeserializeObject<IEnumerable<string>>(response.Body.AsString());
+
+			var areEquivavelent = (expectedGameNames.Count() == responseObjects.Count() && !expectedGameNames.Except(responseObjects).Any());
+
+			Assert.IsTrue(areEquivavelent);
+
+		}
+
+		[Test]
+		[Category("unit")]
 		public void AddScoreBoardData_GivenValidGameRecordObjectAsJson_ReturnsCorrectObjectFromStorage()
 		{
 			IDataStorage cache = new GameScoreBoardDataCache (); 

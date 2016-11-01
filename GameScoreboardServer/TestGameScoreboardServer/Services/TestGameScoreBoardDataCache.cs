@@ -41,7 +41,7 @@ namespace TestGameScoreBoardServer.Tests.Services
 
 			var recordsFromCache = m_gameScoreBoardCache.GetAllScoresForGame("game1");
 
-			Assert.IsTrue (recordsFromCache.Count () == 15); 
+			Assert.IsTrue (recordsFromCache.Count () == 12); 
 		}
 
 		[Test]
@@ -79,12 +79,38 @@ namespace TestGameScoreBoardServer.Tests.Services
 			Assert.IsTrue (recordsFromCache.SingleOrDefault() == null); 
 		}
 
+
 		[Test]
 		[Category("unit")]
 		[ExpectedException(typeof(ArgumentOutOfRangeException))]
 		public void GetScoresForGame_GivenValdigGameNameAndANumberOfScoresOver50_ThrowsArgumentOutOfRangeException()
 		{
 			m_gameScoreBoardCache.GetScoresForGame("game1", 55);
+		}
+
+		[Test]
+		[Category("unit")]
+		public void GetAllGameNames_ReturnsCorrectNamesFromCache() 
+		{
+			AddMultipleRecordsToCache();
+			var expectedGameNames = new List<string> { "game1", "game2", "game3" };
+
+			var resultsFromCache = m_gameScoreBoardCache.GetAllGameNames();
+			var areEquivavelent = (expectedGameNames.Count() == resultsFromCache.Count() && !expectedGameNames.Except(resultsFromCache).Any());
+
+			Assert.IsTrue(areEquivavelent);
+
+		}
+
+		[Test]
+		[Category("unit")]
+		public void GetAllGameNames_ReturnsCorrectNumberOfNames() 
+		{
+			AddMultipleRecordsToCache();
+
+			var resultsFromCache = m_gameScoreBoardCache.GetAllGameNames();
+
+			Assert.AreEqual(3, resultsFromCache.Count());
 		}
 
 		[TearDown]
@@ -98,9 +124,9 @@ namespace TestGameScoreBoardServer.Tests.Services
 			var records = new List<ScoreRecord> () 
 			{
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 5000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 4000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 6000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 3000 }, 
+				new ScoreRecord { GameName = "game2", PlayerName = "player1", Score = 4000 }, 
+				new ScoreRecord { GameName = "game3", PlayerName = "player1", Score = 6000 }, 
+				new ScoreRecord { GameName = "game3", PlayerName = "player1", Score = 3000 }, 
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 7000 }, 
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 9000 }, 

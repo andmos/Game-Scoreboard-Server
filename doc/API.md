@@ -24,6 +24,9 @@ GameScoreboardServer API
     /api/v1/playerScoreBoard?playerName=[playerName]
     # Returns all highscores for [playerName]
 
+    /api/v1/gameNames
+    # Returns list of all the unique game names
+
 ### POST
 
     /api/v1/addScoreBoardData/

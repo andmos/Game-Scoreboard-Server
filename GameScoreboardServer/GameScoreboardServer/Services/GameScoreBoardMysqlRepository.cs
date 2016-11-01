@@ -123,6 +123,7 @@ namespace GameScoreboardServer
 			}
 		}
 
+
 		public int CountHigherScores(string gameName, int score)
 		{
 			var sql = @"Select COUNT(*) FROM GameScoreBoard WHERE GameName = @GameName AND Score > @Score"; 
@@ -144,6 +145,31 @@ namespace GameScoreboardServer
 					connection.Close(); 
 				}
 			}
+		}
+
+		public IEnumerable<string> GetAllGameNames()
+		{
+			var sql = @"SELECT DISTINCT GameName FROM GameScoreBoard";
+
+			using (var connection = m_connectionFactory.GetOpenConnection()) 
+			{
+				try
+				{
+					IEnumerable<string> result = connection.Query<string>(sql);
+					return result;
+				}
+
+				catch (MySqlException e)
+				{
+					Console.WriteLine(e);
+					return Enumerable.Empty<string>();
+				}
+				finally 
+				{
+					connection.Close();
+				}
+			}
+
 		}
 
 		public int AddScoreRecordToStorage (ScoreRecord record)
@@ -169,7 +195,8 @@ namespace GameScoreboardServer
 				}
 			}
 		}
-			
+
+
 	}
 }
 
