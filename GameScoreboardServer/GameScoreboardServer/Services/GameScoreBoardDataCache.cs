@@ -68,6 +68,16 @@ namespace GameScoreboardServer.Services
 			return Enumerable.Empty<ScoreRecord>(); 
 		}
 
+		public IEnumerable<string> GetAllGameNames()
+		{
+			List<string> gameNames = new List<string>();
+			foreach (var record in m_gameScoreBoardCache) 
+			{
+				gameNames.Add(record.Key); 
+			}
+			return gameNames; 
+		}
+
         public IEnumerable<ScoreRecord> GetAllScoresForUsername(string username)
         {
             throw new NotImplementedException(); 
@@ -82,5 +92,7 @@ namespace GameScoreboardServer.Services
 		{
 			m_gameScoreBoardCache.Clear(); 
 		}
-    }
+
+
+	}
 }

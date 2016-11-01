@@ -13,9 +13,9 @@ namespace TestGameScoreboardServer
 			var records = new List<ScoreRecord> () 
 			{
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 5000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 4000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 6000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 3000 }, 
+				new ScoreRecord { GameName = "game2", PlayerName = "player1", Score = 4000 }, 
+				new ScoreRecord { GameName = "game3", PlayerName = "player1", Score = 6000 }, 
+				new ScoreRecord { GameName = "game3", PlayerName = "player1", Score = 3000 }, 
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 7000 }, 
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 9000 }, 

@@ -75,6 +75,30 @@ namespace TestGameScoreboardServer
 
 		[Test]
 		[Category("integration")]
+		public void GetAllGameNames_ReturnsCorrectNumersOfResults() 
+		{
+			AddMultipleRecordsToDatabase();
+
+			var resultsFromDb = m_mysqlConnection.GetAllGameNames();
+
+			Assert.AreEqual(4, resultsFromDb.Count());
+		}
+
+		[Test]
+		[Category("integration")]
+		public void GetAllGameNames_RetunrsCorrectGameNames() 
+		{
+			AddMultipleRecordsToDatabase();
+			var expectedOccurrences = new List<string> { "game1", "game2", "game3", "game5" };
+
+			var resultsFromDb = m_mysqlConnection.GetAllGameNames();
+			var areEquivavelent = (expectedOccurrences.Count() == resultsFromDb.Count() && !expectedOccurrences.Except(resultsFromDb).Any());
+
+			Assert.IsTrue(areEquivavelent);
+		}
+
+		[Test]
+		[Category("integration")]
 		public void GetScoresForGame_GivenValdigGameNameAndANumberOfScores_ReturnsCorrectNumberOfRecordsSorted()
 		{
 			AddMultipleRecordsToDatabase (); 
@@ -111,9 +135,9 @@ namespace TestGameScoreboardServer
 			{
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 5000 }, 
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 4000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 6000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 3000 }, 
-				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 
+				new ScoreRecord { GameName = "game2", PlayerName = "player1", Score = 6000 }, 
+				new ScoreRecord { GameName = "game3", PlayerName = "player1", Score = 3000 }, 
+				new ScoreRecord { GameName = "game3", PlayerName = "player1", Score = 8000 }, 
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 7000 }, 
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 9000 }, 
 				new ScoreRecord { GameName = "game1", PlayerName = "player1", Score = 8000 }, 

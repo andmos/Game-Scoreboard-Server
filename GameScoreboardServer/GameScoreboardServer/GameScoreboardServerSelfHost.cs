@@ -16,7 +16,8 @@ namespace GameScoreboardServer
         {
 			Console.WriteLine (string.Format ("Datasource is {0}", ConfigurationManager.AppSettings ["DataStorage"]));
 			return true; 
-        }
+
+		}
         public bool Stop()
         {
             return false; 
