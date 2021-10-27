@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.IO;
 
-namespace GameScoreboardServer.Crypto
+namespace GameScoreboardServer.Web.Crypto
 {
 	public class StringCipher : ICryptation
 	{

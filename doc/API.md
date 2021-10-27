@@ -9,7 +9,6 @@ GameScoreboardServer API
         "recordId": 0
     }
 
-
 ### GET
 
     /api/v1/ping
