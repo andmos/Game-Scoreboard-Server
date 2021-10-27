@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameScoreboardServer.Crypto
+namespace GameScoreboardServer.Web.Crypto
 {
 	public interface ICryptation
 	{

@@ -1,6 +1,18 @@
-gamescoreboard:
-    build: .
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
     ports:
-        - "5000:5000"
-    external_links:
-      - gamescoreboarddb:gamescoreboarddb
+    - 5000:5000
+    volumes:
+      - './reverse-proxy:/etc/nginx'
+  gamescoreboardserver:
+    image: andmos/gamescoreboardserver
+    build:
+      context: .
+      dockerfile: Dockerfile    
+    ports:
+    - 8080:8080
+    depends_on: 
+      - nginx
+
