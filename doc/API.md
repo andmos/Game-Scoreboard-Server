@@ -6,7 +6,6 @@ GameScoreboardServer API
         "gameName": "",
         "playerName": "",
         "score": 0,
-        "recordId": 0
     }
 
 ### GET

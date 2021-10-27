@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameScoreboardServer.Web.Models;
 using GameScoreboardServer.Web.Services;
+using GameScoreboardServer.Web.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 namespace GameScoreboardServer.Web.Controllers
 {
@@ -21,9 +22,9 @@ namespace GameScoreboardServer.Web.Controllers
         }
 
         [HttpPost("addScoreBoardData")]
-        public IActionResult PostScoreBoardData([FromBody] ScoreRecord scoreRecord)
+        public IActionResult PostScoreBoardData([FromBody] HighscoreViewModel scoreRecord)
         {
-            var createdId = _scoreBoardRepository.AddScoreRecordToStorage(scoreRecord);
+            var createdId = _scoreBoardRepository.AddScoreRecordToStorage(new ScoreRecord { GameName = scoreRecord.GameName, PlayerName = scoreRecord.PlayerName, Score = scoreRecord.Score });
 
             return Created($"api/v1/scoreRecord/{scoreRecord.PlayerName}/{createdId}", new {createdId});
         }

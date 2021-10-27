@@ -29,10 +29,12 @@
     <None Remove="Serilog.Sinks.Console" />
     <None Remove="LightInject.Microsoft.Hosting" />
     <None Remove="MySql.Data" />
+    <None Remove="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Services\" />
     <Folder Include="Crypto\" />
+    <Folder Include="ViewModel\" />
   </ItemGroup>
 </Project>
