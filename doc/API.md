@@ -14,17 +14,17 @@ GameScoreboardServer API
     /api/v1/ping
     # Returns pong
 
-    /api/v1/gameScoreBoard?gameName=[gameName]&count=[count]
+    /api/v1/gameScoreBoard/{gameName}/{count}
     # Returns top [count] list from [gameName]
 
-    /api/v1/countHigherScores?gameName=[gameName]&score=[score]
-    # Returns number of highscores higher than [score]
-
-    /api/v1/playerScoreBoard?playerName=[playerName]
+    /api/v1/playerScoreBoard/{playerName}
     # Returns all highscores for [playerName]
 
     /api/v1/gameNames
     # Returns list of all the unique game names
+
+    /api/v1/scoreRecord/{playerName}/{recordId}
+    # Returns single score record for player
 
 ### POST
 
