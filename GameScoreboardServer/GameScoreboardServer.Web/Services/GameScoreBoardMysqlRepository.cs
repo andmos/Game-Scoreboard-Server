@@ -9,11 +9,11 @@ namespace GameScoreboardServer.Web.Services
 {
 	public class GameScoreBoardMysqlRepository : IScoreBoardRepository 
 	{
-		private readonly IConnectionFactory m_connectionFactory; 
+		private readonly IConnectionFactory _connectionFactory; 
 
 		public GameScoreBoardMysqlRepository (IConnectionFactory connectionFactory)
 		{
-			m_connectionFactory = connectionFactory; 
+			_connectionFactory = connectionFactory; 
 		}
 			
 
@@ -21,7 +21,7 @@ namespace GameScoreboardServer.Web.Services
 		{
 			var sql = @"Select GameName, PlayerName, Score, recordId FROM GameScoreBoard WHERE gameName = @GameName";
 
-			using (var connection = m_connectionFactory.GetOpenConnection()) 
+			using (var connection = _connectionFactory.GetOpenConnection()) 
 			{
 				try
 				{
@@ -46,7 +46,7 @@ namespace GameScoreboardServer.Web.Services
 		{
 			var sql = @"Select GameName, PlayerName, Score, recordId FROM GameScoreBoard WHERE gameName = @GameName ORDER BY GameScoreBoard.Score DESC limit 10";
 
-			using (var connection = m_connectionFactory.GetOpenConnection())
+			using (var connection = _connectionFactory.GetOpenConnection())
 			{
 				try
 				{
@@ -75,7 +75,7 @@ namespace GameScoreboardServer.Web.Services
 			}
 			var sql = @"Select GameName, PlayerName, Score, recordId FROM GameScoreBoard WHERE gameName = @GameName ORDER BY GameScoreBoard.Score DESC limit @NumberOfScores";
 
-			using (var connection = m_connectionFactory.GetOpenConnection())
+			using (var connection = _connectionFactory.GetOpenConnection())
 			{
 				try
 				{
@@ -101,7 +101,7 @@ namespace GameScoreboardServer.Web.Services
 		{
 			var sql = @"Select GameName, PlayerName, Score, recordId FROM GameScoreBoard WHERE PlayerName = @PlayerName"; 
 
-			using (var connection = m_connectionFactory.GetOpenConnection())
+			using (var connection = _connectionFactory.GetOpenConnection())
 			{
 				try
 				{
@@ -132,7 +132,7 @@ namespace GameScoreboardServer.Web.Services
 		{
 			var sql = @"Select COUNT(*) FROM GameScoreBoard WHERE GameName = @GameName AND Score > @Score"; 
 		
-			using (var connection = m_connectionFactory.GetOpenConnection())
+			using (var connection = _connectionFactory.GetOpenConnection())
 			{
 				try
 				{
@@ -155,7 +155,7 @@ namespace GameScoreboardServer.Web.Services
 		{
 			var sql = @"SELECT DISTINCT GameName FROM GameScoreBoard";
 
-			using (var connection = m_connectionFactory.GetOpenConnection()) 
+			using (var connection = _connectionFactory.GetOpenConnection()) 
 			{
 				try
 				{
@@ -181,7 +181,7 @@ namespace GameScoreboardServer.Web.Services
 			var sql = @"INSERT INTO GameScoreBoard(GameName,PlayerName,Score) VALUES (@GameName, @PlayerName, @Score);
 			SELECT LAST_INSERT_ID();"; 
 
-			using (var connection = m_connectionFactory.GetOpenConnection())
+			using (var connection = _connectionFactory.GetOpenConnection())
 			{
 				try
 				{
