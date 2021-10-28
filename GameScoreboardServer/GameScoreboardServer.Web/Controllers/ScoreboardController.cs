@@ -41,7 +41,7 @@ namespace GameScoreboardServer.Web.Controllers
             return _scoreBoardRepository.GetAllScoresForUsername(playerName);
         }
         
-        [HttpGet("gameScoreBoard/{gameName}/{count:int})")]
+        [HttpGet("gameScoreBoard/{gameName}/{count:int}")]
         public IEnumerable<ScoreRecord> GetGameScoreBoard(string gameName, int count)
         {
             return _scoreBoardRepository.GetScoresForGame(gameName, count);
